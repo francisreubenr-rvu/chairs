@@ -2,7 +2,7 @@
 
 Training deck for the **Diplomathon Global — Advanced Diplomat Cohort**. One hundred and five slides across six modules, built to be taught live over a screen share and revised alone afterwards.
 
-**Live:** _(added after first deploy)_
+**Live:** https://chairs-xi.vercel.app
 
 ## What is in it
 
