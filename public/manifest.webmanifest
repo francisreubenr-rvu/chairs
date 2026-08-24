@@ -1,0 +1,15 @@
+{
+  "name": "Chairs — Diplomat Training Programme",
+  "short_name": "Chairs",
+  "description": "Six-module training deck for the Diplomathon Global Advanced Diplomat Cohort: Rules of Procedure, Communication, Design Thinking, Entrepreneurship & Innovation, Major Events, and the Company Portfolio prep track.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#EEE9DD",
+  "theme_color": "#8E2230",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
