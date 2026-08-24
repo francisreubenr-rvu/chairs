@@ -1833,6 +1833,556 @@ figure.fig img { filter: var(--img-filter, saturate(0.94) brightness(0.965) cont
 :root[data-theme="claymorphism"] { --ink-faint: #5E4A3C; }
 /* The module numeral carries a black stroke, but judge it on fill alone */
 :root[data-theme="maxbrutalism"] .module-divider .mod-num { color: #8E2600; }
+
+/* ================================================================
+   PRESENTATION CANVAS
+   The deck previously used fluid clamp() sizing capped at 1220px
+   wide and 21.8px body text. On a large display that left the
+   content as a small block in a sea of empty page, unreadable over
+   a compressed Google Meet share without manual zoom.
+
+   It now works the way presentation software does: every slide is
+   authored on a fixed 1600 x 900 canvas and the whole canvas is
+   transform-scaled to fill the viewport. Type is therefore always
+   the same proportion of the screen, at any display size, and the
+   slide always fills the frame edge to edge.
+
+   Phones keep the old fluid + scroll behaviour: scaling a 1600px
+   canvas down to a 390px screen would make body text ~6px.
+   ================================================================ */
+
+#stage-wrap {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: 2;
+}
+/* Centred by absolute position + translate, not by grid alignment.
+   A grid safe-centres an item wider than its container by pinning it
+   to the start edge, which then combines with transform-origin:center
+   to push the frame off-centre and clip it — visible in scope. */
+#stage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--canvas-w);
+  height: var(--canvas-h);
+  transform: translate(-50%, -50%) scale(var(--stage-scale, 1));
+  transform-origin: center center;
+  will-change: transform;
+}
+
+:root {
+  --canvas-w: 1600px;
+  --canvas-h: 900px;
+
+  /* Absolute sizes, authored for the 1600 x 900 canvas.
+     A 26px body on a 1600 canvas renders ~31px on a 1920 screen. */
+  --title-size: 88px;
+  --h1-size: 56px;
+  --body-size: 26px;
+  --sub-size: 21px;
+  --kicker-size: 15px;
+  --slide-padding: 62px;
+  --content-max: 1476px;
+}
+
+/* Slides now fill the canvas, not the viewport */
+#stage > .slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: var(--slide-padding);
+  padding-bottom: 104px;
+}
+#stage > .slide .slide-inner {
+  width: 100%;
+  max-width: var(--content-max);
+  max-height: 100%;
+}
+
+/* Per-slide auto-fit: a dense slide shrinks itself just enough to
+   fit the canvas rather than overflowing. Set from JS. */
+#stage > .slide .slide-inner {
+  transform: scale(var(--fit, 1));
+  transform-origin: center center;
+}
+
+/* ---- Component sizes on the canvas ---- */
+h1 { line-height: 1.06; }
+.title-slide h1 { line-height: 1.0; }
+.lead { font-size: 26px; max-width: 76ch; line-height: 1.42; margin-top: 14px; margin-bottom: 20px; }
+.kicker { margin-bottom: 12px; letter-spacing: 0.15em; }
+.src { font-size: 14px; }
+.rule { width: 56px; margin: 16px 0 20px; }
+
+ul.bullets { gap: 14px; }
+ul.bullets li { font-size: var(--body-size); line-height: 1.34; padding-left: 1.05em; }
+ul.bullets li::before { top: 0.6em; width: 0.36em; height: 2px; }
+.sub { font-size: 0.8em; margin-top: 4px; line-height: 1.36; }
+
+ol.compact { gap: 15px; }
+ol.compact li { font-size: var(--body-size); line-height: 1.32; padding-left: 3rem; }
+ol.compact li::before { font-size: 0.7em; top: 0.14em; }
+
+.cols-2 { gap: 44px; }
+.cols-3 { gap: 30px; }
+.col-head { font-size: 27px; margin-bottom: 14px; padding-bottom: 9px; }
+
+.panel { padding: 22px 24px; }
+.panel ul.bullets { gap: 11px; }
+.panel ul.bullets li { font-size: 24px; }
+
+.callout { margin-top: 20px; padding: 16px 20px; font-size: 22px; line-height: 1.42; }
+.callout.practice .tag { font-size: 14px; margin-bottom: 6px; }
+
+.pace-table { font-size: 23px; }
+.pace-table th, .pace-table td { padding: 12px 14px; }
+.pace-table th { font-size: 15px; }
+.pace-table td:first-child { font-size: 0.9em; width: 9em; }
+.pace-table.dense th, .pace-table.dense td { padding: 9px 12px; font-size: 21px; line-height: 1.3; }
+.pace-table.dense td:first-child { font-size: 21px; }
+.pace-table.dense th { font-size: 14px; }
+.pace-table.wide-first td:first-child { width: 15em; }
+.pace-table .access { font-size: 0.86em; }
+
+.checklist { gap: 13px 34px; }
+.checklist li { font-size: var(--body-size); padding-left: 1.5em; }
+.checklist li::before { top: 0.36em; width: 0.72em; height: 0.72em; }
+
+.factcloud { gap: 11px; margin-top: 18px; }
+.factcloud .fact { font-size: 20px; padding: 10px 14px; line-height: 1.3; max-width: 34ch; }
+.factcloud .fact b { font-size: 0.84em; margin-bottom: 3px; }
+.factcloud-head { font-size: 14px; margin-top: 20px; }
+
+.histbyte { margin-top: 18px; padding: 15px 19px; font-size: 21px; line-height: 1.42; }
+.histbyte .tag { font-size: 14px; margin-bottom: 6px; }
+
+.recap-grid { gap: 15px; }
+.recap-card { padding: 16px 18px; }
+.recap-card .rc-n { font-size: 14px; margin-bottom: 5px; }
+.recap-card .rc-t { font-size: 25px; margin-bottom: 5px; }
+.recap-card .rc-b { font-size: 20px; line-height: 1.34; }
+
+.selftest { gap: 11px; }
+.selftest li { font-size: 22px; grid-template-columns: 2.2em 1fr; }
+.selftest li .q { font-size: 0.82em; }
+.selftest li .a { font-size: 0.86em; margin-top: 3px; }
+
+.stage-row { grid-template-columns: 5.4em 1fr; gap: 20px; padding: 13px 0; }
+.stage-row .stage-n { font-size: 0.8em; }
+.stage-row .stage-body { font-size: var(--body-size); line-height: 1.32; }
+
+.timeline { gap: 14px; }
+.timeline li { grid-template-columns: 9em 1fr; gap: 16px; font-size: 24px; line-height: 1.32; }
+.timeline .yr { font-size: 0.84em; }
+
+.bda { gap: 24px; }
+
+figure.fig { padding: 11px; }
+figure.fig figcaption { font-size: 18px; margin-top: 10px; line-height: 1.34; }
+figure.fig .credit { font-size: 13px; margin-top: 5px; }
+.fig-strip { gap: 18px; margin-top: 20px; }
+.fig-strip figure.fig img { max-height: 300px; }
+.fig-split { gap: 38px; }
+.fig-split figure.fig img { max-height: 460px; }
+
+.diagram { max-height: 470px; }
+
+.title-slide .subtitle { font-size: 27px; margin-top: 18px; max-width: 54ch; line-height: 1.4; }
+.title-slide .arc { margin-top: 34px; gap: 34px; padding-top: 20px; }
+.arc-item { font-size: 15px; max-width: 22ch; }
+.arc-item b { font-size: 27px; margin-top: 6px; }
+.arc-item span { font-size: 18px; margin-top: 5px; }
+
+.module-divider .mod-num { font-size: 104px; }
+.module-divider h1 { max-width: 18ch; }
+.module-divider .subtitle { font-size: 27px; margin-top: 16px; max-width: 66ch; }
+.module-divider .mod-contents { margin-top: 30px; padding-top: 18px; gap: 11px; }
+.module-divider .mod-contents span { font-size: 15px; padding: 7px 12px; }
+
+.spill-2 { gap: 14px 46px; }
+
+/* Chrome sits outside the canvas so it never scales out of legibility */
+#day-chip, #pace-chip, #index-toggle, #theme-toggle, #sound-toggle { font-size: 13px; padding: 8px 13px; }
+#meta-bar { font-size: 17px; }
+
+/* The canvas is only used where there is room for it. Below 900px the
+   deck reverts to the fluid, scrollable layout built for phones. */
+@media (max-width: 900px), (max-height: 480px) {
+  #stage-wrap { position: static; overflow: visible; }
+  #stage { position: static; top: auto; left: auto; width: 100%; height: 100%; transform: none; }
+  #stage > .slide {
+    position: absolute;
+    width: 100vw; height: 100vh; height: 100dvh;
+    padding: var(--slide-padding-m, 1.1rem);
+    padding-bottom: 4.6rem;
+  }
+  #stage > .slide .slide-inner { transform: none; max-width: 100%; }
+  :root {
+    --title-size: clamp(1.7rem, 9vw, 2.4rem);
+    --h1-size: clamp(1.2rem, 6.4vw, 1.6rem);
+    --body-size: 0.94rem;
+    --sub-size: 0.84rem;
+    --kicker-size: 0.7rem;
+  }
+  .lead { font-size: 0.94rem; margin-top: 8px; margin-bottom: 12px; }
+  .col-head { font-size: 1.02rem; }
+  .callout, .histbyte { font-size: 0.88rem; padding: 10px 12px; }
+  .pace-table { font-size: 0.85rem; }
+  .pace-table th, .pace-table td { padding: 6px 8px; }
+  .pace-table.dense th, .pace-table.dense td { padding: 5px 7px; font-size: 0.8rem; }
+  .pace-table.dense td:first-child, .pace-table.wide-first td:first-child { width: auto; font-size: 0.8rem; }
+  .factcloud .fact { font-size: 0.82rem; max-width: none; flex: 1 1 100%; }
+  .histbyte .tag, .factcloud-head, .callout.practice .tag { font-size: 10px; }
+  .recap-card .rc-t { font-size: 1rem; }
+  .recap-card .rc-b { font-size: 0.84rem; }
+  .selftest li { font-size: 0.88rem; }
+  .timeline li { font-size: 0.9rem; }
+  .stage-row .stage-body { font-size: 0.9rem; }
+  figure.fig figcaption { font-size: 0.78rem; }
+  figure.fig .credit { font-size: 10px; }
+  .module-divider .mod-num { font-size: 3rem; }
+  .module-divider .subtitle, .title-slide .subtitle { font-size: 0.95rem; }
+  .arc-item b { font-size: 1.05rem; }
+  .arc-item span { font-size: 0.8rem; }
+  #meta-bar { font-size: 13px; }
+  #day-chip, #pace-chip { font-size: 10px; padding: 5px 9px; }
+}
+
+/* ================================================================
+   PRESENTER CREDIT + FIRST-RUN LETTER
+   ================================================================ */
+#credit-mark {
+  position: fixed;
+  z-index: 480;
+  left: 50%;
+  transform: translateX(-50%);
+  top: clamp(10px, 1.6vw, 20px);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  opacity: 0.62;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* First-run letter */
+#letter {
+  position: fixed; inset: 0; z-index: 960;
+  display: none;
+  place-items: center;
+  padding: clamp(1rem, 4vw, 3rem);
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  overflow-y: auto;
+}
+#letter.open { display: grid; }
+#letter .lt-card {
+  width: min(96vw, 780px);
+  background: var(--panel-bg);
+  border: var(--panel-border);
+  border-radius: var(--panel-radius);
+  box-shadow: var(--panel-shadow);
+  padding: clamp(1.3rem, 3.4vw, 2.6rem);
+  animation: lt-in 0.42s var(--theme-ease) both;
+}
+@keyframes lt-in {
+  from { opacity: 0; transform: translateY(14px) scale(0.985); }
+  to   { opacity: 1; transform: none; }
+}
+#letter .lt-kicker {
+  font-family: var(--font-mono);
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--accent-text);
+  margin-bottom: 10px;
+}
+#letter h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.6rem, 3.4vw, 2.5rem);
+  font-weight: var(--heading-weight);
+  letter-spacing: var(--heading-tracking);
+  line-height: 1.08;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+#letter .lt-rule { width: 56px; height: var(--rule-weight); background: var(--accent); margin: 16px 0 18px; }
+#letter p {
+  font-size: clamp(0.95rem, 1.15vw, 1.08rem);
+  line-height: 1.55;
+  color: var(--ink);
+  margin-bottom: 12px;
+  max-width: 62ch;
+}
+#letter p.muted { color: var(--ink-muted); }
+#letter ul {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+  gap: 8px 20px;
+  margin: 4px 0 18px;
+}
+#letter ul li {
+  font-size: clamp(0.86rem, 1.02vw, 0.98rem);
+  line-height: 1.4;
+  color: var(--ink-muted);
+  padding-left: 1.1em;
+  position: relative;
+}
+#letter ul li::before {
+  content: ""; position: absolute; left: 0; top: 0.6em;
+  width: 0.36em; height: 2px; background: var(--accent);
+}
+#letter ul li b { color: var(--ink); font-weight: 700; }
+#letter kbd {
+  font-family: var(--font-mono);
+  font-size: 0.86em; font-weight: 600;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  padding: 1px 5px;
+  background: var(--bg-deep);
+  color: var(--ink);
+}
+#letter .lt-sign {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
+  display: flex; flex-wrap: wrap; align-items: center;
+  justify-content: space-between; gap: 14px;
+}
+#letter .lt-name {
+  font-family: var(--font-serif);
+  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+  font-weight: var(--heading-weight);
+  color: var(--ink);
+  line-height: 1.2;
+}
+#letter .lt-name span {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-top: 4px;
+}
+#letter button {
+  font-family: var(--font-mono);
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 11px 20px;
+  cursor: pointer;
+  background: var(--accent);
+  color: var(--bg);
+  border: 1px solid var(--accent);
+  border-radius: var(--chip-radius);
+  box-shadow: var(--panel-shadow);
+}
+#letter button:hover { filter: brightness(1.1); }
+
+@media (max-width: 900px) {
+  #credit-mark { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #letter .lt-card { animation: none; }
+}
+
+/* ================================================================
+   ASPECT MODES
+     standard  16:9    1.778:1   1600 x 900   — screen-share default
+     flat      1.85:1            1665 x 900   — cinema "flat"
+     scope     2.39:1            2151 x 900   — anamorphic "scope"
+
+   Widening the canvas while holding the height gives each slide more
+   horizontal room, so lines get longer and less content has to be
+   auto-fit down. On a 16:9 display the wider canvases letterbox,
+   which is the point: it reads as a film frame.
+   ================================================================ */
+:root { --canvas-w: 1600px; }
+:root[data-aspect="flat"]  { --canvas-w: 1665px; }
+:root[data-aspect="scope"] { --canvas-w: 2151px; }
+
+/* Content width follows the canvas instead of a fixed cap */
+:root { --content-max: calc(var(--canvas-w) - (2 * var(--slide-padding))); }
+
+/* Cinematic presentation: matte black surround, themed frame */
+:root[data-cine="on"] #stage-wrap {
+  background: #08080A;
+}
+:root[data-cine="on"] #stage {
+  background-color: var(--bg);
+  background-image: var(--field-image);
+  background-size: var(--field-size);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.07), 0 30px 90px rgba(0,0,0,0.6);
+  overflow: hidden;
+}
+:root[data-cine="on"] body::before,
+:root[data-cine="on"] body::after { display: none; }
+:root[data-cine="on"] #stage::before {
+  content: "";
+  position: absolute; inset: 0;
+  pointer-events: none;
+  z-index: 3;
+  opacity: var(--grain-opacity, 0.055);
+  mix-blend-mode: var(--grain-blend, multiply);
+  background-image: var(--grain-image);
+  background-size: 190px 190px;
+}
+
+/* Chrome sits on the black surround in cinematic mode, so it takes a
+   neutral light treatment rather than the theme's ink. */
+:root[data-cine="on"] #day-chip,
+:root[data-cine="on"] #pace-chip,
+:root[data-cine="on"] #index-toggle,
+:root[data-cine="on"] #theme-toggle,
+:root[data-cine="on"] #sound-toggle,
+:root[data-cine="on"] #aspect-toggle {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.20);
+  color: #E4E4E7;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+:root[data-cine="on"] #day-chip { color: #F0A8B0; border-color: rgba(240,168,176,0.35); }
+:root[data-cine="on"] #meta-bar { color: #9A9AA2; }
+:root[data-cine="on"] #meta-bar .current { color: #F4F4F5; }
+:root[data-cine="on"] #credit-mark { color: #B8B8C0; opacity: 0.5; }
+:root[data-cine="on"] #progress-track { background: rgba(255,255,255,0.12); }
+
+/* Aspect control */
+#aspect-toggle {
+  position: fixed; z-index: 500;
+  top: clamp(12px, 2vw, 22px);
+  right: clamp(292px, 34vw, 440px);
+  font-family: var(--font-mono);
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 0.11em; text-transform: uppercase;
+  padding: 6px 11px;
+  background: var(--chip-bg);
+  border: var(--chip-border);
+  border-radius: var(--chip-radius);
+  color: var(--ink-muted);
+  cursor: pointer;
+  box-shadow: var(--panel-shadow);
+}
+#aspect-toggle:hover { color: var(--accent); }
+
+/* Aspect picker block inside the theme panel */
+#aspect-block { margin-top: clamp(1.2rem, 2.6vh, 2rem); }
+#aspect-block h3 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.05rem, 1.9vw, 1.4rem);
+  font-weight: var(--heading-weight);
+  color: var(--ink);
+  margin-bottom: 3px;
+}
+#aspect-block .ab-hint {
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: clamp(0.6rem, 1.4vh, 1rem);
+}
+#aspect-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr));
+  gap: clamp(0.5rem, 1.2vw, 0.85rem);
+}
+#aspect-list button {
+  width: 100%; text-align: left; cursor: pointer;
+  font-family: inherit; color: var(--ink);
+  background: var(--panel-bg);
+  border: var(--panel-border);
+  border-radius: var(--panel-radius);
+  box-shadow: var(--panel-shadow);
+  padding: clamp(0.6rem, 1vw, 0.85rem);
+  display: block;
+  transition: transform 0.16s var(--theme-ease), border-color 0.16s ease;
+}
+#aspect-list button:hover { transform: translateY(-2px); }
+#aspect-list button[aria-current="true"] { border-color: var(--accent); }
+#aspect-list .ab-ratio {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--accent-text);
+  margin-bottom: 4px;
+}
+#aspect-list .ab-name {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: clamp(1rem, 1.35vw, 1.15rem);
+  font-weight: var(--heading-weight);
+  line-height: 1.15;
+}
+#aspect-list .ab-desc {
+  display: block; font-size: 12px;
+  color: var(--ink-muted); margin-top: 3px; line-height: 1.3;
+}
+/* Proportional preview of the frame shape */
+#aspect-list .ab-frame {
+  display: block;
+  margin-top: 9px;
+  height: 26px;
+  background: var(--bg-deep);
+  border: 1px solid var(--rule);
+}
+#aspect-list .ab-frame i {
+  display: block; height: 100%;
+  background: var(--accent);
+  opacity: 0.32;
+}
+
+@media (max-width: 900px) {
+  #aspect-toggle { display: none; }
+  :root[data-cine="on"] #stage-wrap { background: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #aspect-list button:hover { transform: none; }
+}
+
+/* ---- Title and divider slides should use the whole frame ----
+   These were authored for a narrow fluid column and left a third of
+   a corporate-sized frame empty on the right. */
+@media (min-width: 901px) and (min-height: 481px) {
+  .title-slide h1 { max-width: 18ch; }
+  .title-slide .subtitle { max-width: 62ch; }
+  .title-slide .arc {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    width: 100%;
+  }
+  .arc-item { max-width: none; }
+
+  .module-divider h1 { max-width: 22ch; }
+  .module-divider .subtitle { max-width: 74ch; }
+  .module-divider .mod-contents { width: 100%; }
+
+  /* Long single-column lists read better across a wide frame when the
+     measure is held; keep prose from running edge to edge. */
+  ul.bullets > li, ol.compact > li { max-width: 104ch; }
+  .lead { max-width: 88ch; }
+}
+
+/* Scope is very wide: two columns of body copy beat one long line */
+:root[data-aspect="scope"] .slide-inner > ul.bullets,
+:root[data-aspect="scope"] .slide-inner > ol.compact {
+  columns: 2;
+  column-gap: 64px;
+}
+:root[data-aspect="scope"] .slide-inner > ul.bullets > li,
+:root[data-aspect="scope"] .slide-inner > ol.compact > li {
+  break-inside: avoid;
+  max-width: none;
+}
+:root[data-aspect="scope"] .lead { max-width: 108ch; }
 @media (max-height: 700px) {
   :root {
     --slide-padding: clamp(0.7rem, 2.2vw, 1.6rem);
@@ -1942,8 +2492,34 @@ figure.fig img { filter: var(--img-filter, saturate(0.94) brightness(0.965) cont
 <div id="meta-bar"><span class="current">01</span><span>/ 00</span></div>
 <button id="index-toggle" aria-haspopup="dialog" aria-expanded="false">Index · M</button>
 <button id="theme-toggle" aria-haspopup="dialog" aria-expanded="false">Theme · T</button>
+<button id="aspect-toggle" aria-haspopup="dialog" aria-label="Change frame aspect ratio">16:9 · C</button>
 <button id="sound-toggle" aria-pressed="false" aria-label="Toggle slide sounds">Sound · S</button>
+<div id="credit-mark">Presented by Francis Reuben R</div>
 <div id="sr-status" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+<div id="letter" role="dialog" aria-modal="true" aria-labelledby="lt-title" aria-hidden="true">
+  <div class="lt-card">
+    <div class="lt-kicker">Diplomathon Global · Advanced Diplomat Cohort</div>
+    <h2 id="lt-title">Welcome to Chairs</h2>
+    <div class="lt-rule"></div>
+    <p>You are looking at the whole training programme in one place: <b>six modules, 105 slides</b>, covering the Rules of Procedure, Effective Communication, Design Thinking, Entrepreneurship &amp; Innovation, the Major Events that shaped the world you will debate, and how to research a company portfolio to primary-source standard.</p>
+    <p>Two things worth knowing before you start. First, every line is <b>tagged with where it came from</b> — a crimson tag means it traces to a Diplomathon document at the page named, and in Module 1 those are binding rules. A green tag means it is added teaching, useful but not procedure. You should always be able to tell the difference between what the rules say and what anyone, including me, thinks about them.</p>
+    <p>Second, this is built to be revised alone, not only watched once:</p>
+    <ul>
+      <li><b>Your place is saved.</b> Close the tab and it offers to bring you back.</li>
+      <li><b>It works offline</b> after your first visit.</li>
+      <li><kbd>/</kbd> <b>searches</b> all 105 slides.</li>
+      <li><kbd>M</kbd> jumps between modules.</li>
+      <li><kbd>T</kbd> changes theme, <kbd>F</kbd> goes fullscreen.</li>
+      <li>Any slide is <b>linkable</b> — send a classmate the URL.</li>
+    </ul>
+    <p class="muted">The committee rewards the delegate who can make a claim, name its source, propose an action, and defend all three under challenge. Everything here is aimed at that.</p>
+    <div class="lt-sign">
+      <div class="lt-name">Francis Reuben R<span>Trainer · Advanced Diplomat Cohort</span></div>
+      <button type="button" id="lt-start">Start the deck</button>
+    </div>
+  </div>
+</div>
 
 <div id="resume-bar" role="status">
   <span class="rb-text">You left off at <b id="rb-slide"></b>.</span>
@@ -1966,6 +2542,12 @@ figure.fig img { filter: var(--img-filter, saturate(0.94) brightness(0.965) cont
     <h2>Theme</h2>
     <p class="th-hint">Click to apply · Esc or T to close · your choice is remembered</p>
     <ol id="th-list"></ol>
+
+    <div id="aspect-block">
+      <h3>Frame</h3>
+      <p class="ab-hint">Cinematic ratios letterbox on a 16:9 screen · C cycles</p>
+      <ul id="aspect-list"></ul>
+    </div>
   </div>
 </div>
 
@@ -1998,6 +2580,9 @@ figure.fig img { filter: var(--img-filter, saturate(0.94) brightness(0.965) cont
 <!-- ===================== MODULE 0 · ORIENTATION ===================== -->
 
 <!-- TITLE -->
+<div id="stage-wrap">
+<div id="stage">
+
 <section class="slide active" data-module="0" data-pace="Programme opening" data-src="master">
   <div class="slide-inner title-slide">
     <div class="kicker">Diplomathon Global · Advanced Diplomat Cohort <span class="src">Master deck</span></div>
@@ -2118,7 +2703,7 @@ figure.fig img { filter: var(--img-filter, saturate(0.94) brightness(0.965) cont
           <li><b>Arrow keys / Space</b> — advance and go back</li>
           <li><b>M</b> — open the module index and jump</li>
           <li><b>T</b> — change theme · <b>S</b> — toggle slide sounds</li>
-          <li><b>/</b> — search every slide · <b>F</b> — fullscreen</li>
+          <li><b>/</b> — search every slide · <b>F</b> — fullscreen · <b>C</b> — frame ratio</li>
           <li class="sub">Your place, theme and sound choice are remembered in this browser, so you can close the tab and pick up where you stopped.</li>
           <li><b>Home / End</b> — first and last slide</li>
           <li><b>Swipe</b> — on touch devices only</li>
@@ -5004,6 +5589,10 @@ figure.fig img { filter: var(--img-filter, saturate(0.94) brightness(0.965) cont
   </div>
 </section>
 
+</div>
+</div>
+
+
 <script>
 (function () {
   const slides = Array.from(document.querySelectorAll('.slide'));
@@ -5256,8 +5845,140 @@ figure.fig img { filter: var(--img-filter, saturate(0.94) brightness(0.965) cont
       srStatus.textContent = 'Slide ' + (current + 1) + ' of ' + total + ': ' + slideTitle(s);
     }
     persistPlace();
+    fitSlide(s);
   }
 
+
+
+  /* ============================================================
+     STAGE SCALING
+     The canvas is a fixed 1600 x 900. Scale it to fill whatever
+     screen it lands on so type is always the same proportion of
+     the frame — this is what makes it legible on a shared screen
+     without anyone zooming.
+     ============================================================ */
+  const stage = document.getElementById('stage');
+  let CANVAS_W = 1600;
+  const CANVAS_H = 900;
+  let canvasMode = false;
+
+  function fitStage() {
+    canvasMode = window.matchMedia('(min-width: 901px) and (min-height: 481px)').matches;
+    if (!canvasMode) {
+      document.documentElement.style.removeProperty('--stage-scale');
+      slides.forEach(function (s) { s.querySelector('.slide-inner').style.removeProperty('--fit'); });
+      return;
+    }
+    const s = Math.min(window.innerWidth / CANVAS_W, window.innerHeight / CANVAS_H);
+    document.documentElement.style.setProperty('--stage-scale', String(s));
+  }
+
+  /* Auto-fit one slide: if its content is taller than the canvas
+     allows, shrink just that slide enough to fit. Most slides stay
+     at full size; only the densest give anything back. */
+  const FIT_FLOOR = 0.72;
+  function fitSlide(el) {
+    if (!canvasMode || !el) return;
+    const inner = el.querySelector('.slide-inner');
+    if (!inner) return;
+    inner.style.setProperty('--fit', '1');
+    const cs = getComputedStyle(el);
+    const avail = el.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+    const availW = el.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    const h = inner.scrollHeight, w = inner.scrollWidth;
+    if (h <= avail + 1 && w <= availW + 1) return;
+    const k = Math.max(FIT_FLOOR, Math.min(avail / h, availW / w, 1));
+    inner.style.setProperty('--fit', String(Math.floor(k * 1000) / 1000));
+  }
+
+  function fitAll() {
+    fitStage();
+    if (!canvasMode) return;
+    slides.forEach(fitSlide);
+  }
+
+  let fitTimer = null;
+  window.addEventListener('resize', function () {
+    fitStage();
+    clearTimeout(fitTimer);
+    fitTimer = setTimeout(fitAll, 160);
+  });
+  document.addEventListener('fullscreenchange', function () { setTimeout(fitAll, 120); });
+
+
+  /* ============================================================
+     ASPECT / CINEMATIC MODE
+     ============================================================ */
+  const ASPECTS = [
+    { id:'standard', ratio:'16:9',   w:1600, name:'Standard',  desc:'1.778:1 — matches a screen share and most displays edge to edge.', cine:false },
+    { id:'flat',     ratio:'1.85:1', w:1665, name:'Flat',      desc:'The common modern theatrical ratio. A shallow letterbox.', cine:true },
+    { id:'scope',    ratio:'2.39:1', w:2151, name:'Scope',     desc:'Anamorphic widescreen. Widest frame, deepest letterbox.', cine:true }
+  ];
+  const aspectToggle = document.getElementById('aspect-toggle');
+  const aspectList = document.getElementById('aspect-list');
+  let aspect = storageGet('dg-aspect') || 'standard';
+  if (!ASPECTS.some(a => a.id === aspect)) aspect = 'standard';
+
+  function applyAspect(id, announce) {
+    const a = ASPECTS.find(x => x.id === id) || ASPECTS[0];
+    aspect = a.id;
+    const root = document.documentElement;
+    if (a.id === 'standard') root.removeAttribute('data-aspect');
+    else root.setAttribute('data-aspect', a.id);
+    if (a.cine) root.setAttribute('data-cine', 'on');
+    else root.removeAttribute('data-cine');
+    CANVAS_W = a.w;
+    storageSet('dg-aspect', a.id);
+    aspectToggle.textContent = a.ratio + ' · C';
+    aspectList.querySelectorAll('button').forEach(b =>
+      b.setAttribute('aria-current', b.dataset.aspect === a.id ? 'true' : 'false'));
+    fitAll();
+    if (announce && srStatus) srStatus.textContent = 'Frame: ' + a.name + ', ' + a.ratio;
+  }
+
+  ASPECTS.forEach(function (a) {
+    const li = document.createElement('li');
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.dataset.aspect = a.id;
+    btn.innerHTML = '<span class="ab-ratio"></span><span class="ab-name"></span>' +
+                    '<span class="ab-desc"></span><span class="ab-frame"><i></i></span>';
+    btn.querySelector('.ab-ratio').textContent = a.ratio;
+    btn.querySelector('.ab-name').textContent = a.name;
+    btn.querySelector('.ab-desc').textContent = a.desc;
+    // preview bar height is inversely proportional to the ratio
+    btn.querySelector('.ab-frame i').style.height = (900 / a.w * 1600 / 900 * 100 * 0.5625).toFixed(1) + '%';
+    btn.addEventListener('click', function () { applyAspect(a.id, true); sfx('theme'); });
+    li.appendChild(btn);
+    aspectList.appendChild(li);
+  });
+
+  function cycleAspect() {
+    const i = ASPECTS.findIndex(a => a.id === aspect);
+    applyAspect(ASPECTS[(i + 1) % ASPECTS.length].id, true);
+    sfx('theme');
+  }
+  aspectToggle.addEventListener('click', cycleAspect);
+
+  /* ============================================================
+     FIRST-RUN LETTER
+     ============================================================ */
+  const letterEl = document.getElementById('letter');
+  function closeLetter() {
+    letterEl.classList.remove('open');
+    letterEl.setAttribute('aria-hidden', 'true');
+    storageSet('dg-letter', 'seen');
+  }
+  function openLetter() {
+    letterEl.classList.add('open');
+    letterEl.setAttribute('aria-hidden', 'false');
+    const b = document.getElementById('lt-start');
+    if (b) b.focus();
+  }
+  document.getElementById('lt-start').addEventListener('click', function () {
+    closeLetter(); sfx('open');
+  });
+  letterEl.addEventListener('click', function (e) { if (e.target === letterEl) closeLetter(); });
 
   /* ============================================================
      PLACE MEMORY — resume where the student stopped.
@@ -5439,12 +6160,14 @@ figure.fig img { filter: var(--img-filter, saturate(0.94) brightness(0.965) cont
   document.addEventListener('keydown', function (e) {
     if (e.metaKey || e.ctrlKey || e.altKey) return;
     if (searchPanel.classList.contains('open')) return;
+    if (letterEl.classList.contains('open') && e.key !== 'Escape' && e.key !== 'Enter') return;
     const tag = (e.target && e.target.tagName) || '';
     if (tag === 'INPUT' || tag === 'TEXTAREA') return;
     const indexOpen = indexEl.classList.contains('open');
     const themeOpen = themePanel.classList.contains('open');
     if (e.key === '/') { e.preventDefault(); openSearch(); return; }
     if (e.key === 'Escape') {
+      if (letterEl.classList.contains('open')) { e.preventDefault(); closeLetter(); return; }
       if (themeOpen) { e.preventDefault(); closeTheme(); sfx('close'); }
       else if (indexOpen) { e.preventDefault(); closeIndex(); sfx('close'); }
       return;
@@ -5461,6 +6184,7 @@ figure.fig img { filter: var(--img-filter, saturate(0.94) brightness(0.965) cont
       e.preventDefault(); setSound(!soundOn); if (soundOn) sfx('open'); return;
     }
     if (e.key === 'f' || e.key === 'F') { e.preventDefault(); toggleFullscreen(); return; }
+    if (e.key === 'c' || e.key === 'C') { e.preventDefault(); cycleAspect(); return; }
     if (indexOpen || themeOpen) return;
     if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Spacebar') {
       e.preventDefault(); next();
@@ -5492,12 +6216,26 @@ figure.fig img { filter: var(--img-filter, saturate(0.94) brightness(0.965) cont
     current = fromHash;
   } else {
     const saved = parseInt(storageGet('dg-slide') || '1', 10);
-    if (saved > 1 && saved <= total) {
+    if (saved > 1 && saved <= total && storageGet('dg-letter') === 'seen') {
       window.setTimeout(function () { showResume(saved); }, 700);
       window.setTimeout(hideResume, 12000);
     }
   }
+  applyAspect(aspect, false);
+  fitStage();
   render();
+  window.requestAnimationFrame(function () { fitAll(); });
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(function () { fitAll(); });
+  }
+  window.setTimeout(fitAll, 900);
+
+  /* A first-time visitor gets the letter; a returning one gets their
+     place back instead. Never both at once. */
+  if (storageGet('dg-letter') !== 'seen') {
+    hideResume();
+    window.setTimeout(openLetter, 260);
+  }
 
   /* Offline support. Registered only over http(s); opening the file
      directly with file:// simply skips it. */

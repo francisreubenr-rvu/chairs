@@ -35,9 +35,26 @@ Module 1 reproduces the previously verified 24-slide Rules of Procedure deck unc
 | `M` | Module index |
 | `/` | Search all slides |
 | `T` | Theme picker (7 themes) |
+| `C` | Frame ratio — 16:9 / 1.85:1 flat / 2.39:1 scope |
 | `S` | Slide sounds on/off (off by default) |
 | `F` | Fullscreen |
 | `Home` `End` | First / last slide |
+
+## Sizing
+
+Slides are authored on a fixed **1600 x 900 canvas** which is transform-scaled to fill whatever screen it lands on, the way presentation software works. Type is therefore a constant proportion of the frame at any display size — body copy renders at roughly 31px on a 1920 screen and 42px on a 2560 — so a screen share is legible without anyone zooming. A slide whose content would exceed the canvas shrinks only itself, just enough to fit.
+
+Phones below 900px keep a fluid, scrollable layout instead; scaling a 1600px canvas down to a 390px screen would render body text at about 6px.
+
+### Frame ratios
+
+| Mode | Ratio | Canvas | Notes |
+|---|---|---|---|
+| Standard | 1.778:1 (16:9) | 1600 x 900 | Fills a screen share edge to edge |
+| Flat | 1.85:1 | 1665 x 900 | Common modern theatrical ratio, shallow letterbox |
+| Scope | 2.39:1 | 2151 x 900 | Anamorphic widescreen, deep letterbox, body lists go two-column |
+
+The two cinematic ratios letterbox against a matte black surround and switch the chrome to a light-on-dark treatment.
 
 Edge-click advance is deliberately disabled so a stray click on a shared screen cannot move the deck. Swipe works on touch devices.
 
