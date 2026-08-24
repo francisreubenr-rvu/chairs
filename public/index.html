@@ -1899,7 +1899,12 @@ figure.fig img { filter: var(--img-filter, saturate(0.94) brightness(0.965) cont
 #stage > .slide .slide-inner {
   width: 100%;
   max-width: var(--content-max);
-  max-height: 100%;
+  /* No max-height on the canvas. Clamping the box makes children
+     overflow it while the auto-fit scale is computed from the clamped
+     height, so tall slides were scaled by the wrong factor and the
+     last block still fell outside the frame. Overflow is handled by
+     the scale instead. */
+  max-height: none;
 }
 
 /* Per-slide auto-fit: a dense slide shrinks itself just enough to
@@ -2480,6 +2485,236 @@ figure.fig .credit { font-size: 13px; margin-top: 5px; }
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
+
+/* ================================================================
+   EDITORIAL REFINEMENT
+   The deck reads as a printed conference programme that happens to
+   be projected. Everything here serves that: department-head rules,
+   folio numbering, optical headline setting, a page that settles
+   into place rather than snapping.
+
+   Nothing here may cost contrast, fit or legibility. This is
+   teaching material first.
+   ================================================================ */
+
+/* ---- 1 · PAGE SETTLE ----
+   One orchestrated reveal per slide beats scattered micro-motion.
+   Elements rise and resolve in reading order, 44ms apart, so the
+   eye is led down the page instead of meeting it all at once. */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes settle {
+    from { opacity: 0; transform: translateY(11px); }
+    to   { opacity: 1; transform: none; }
+  }
+  /* The ghosted numeral is excluded: a keyframe's `to { opacity: 1 }`
+     outranks a normal declaration, so settling it would burn off the
+     watermark and render it at full strength. It gets its own fade. */
+  #stage > .slide.active .slide-inner > *:not(.mod-num) {
+    animation: settle 460ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  @keyframes ghost-in {
+    from { opacity: 0; transform: translateY(18px) scale(1.02); }
+    to   { opacity: var(--ghost-alpha); transform: none; }
+  }
+  #stage > .slide.active .slide-inner > .mod-num {
+    animation: ghost-in 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: 90ms;
+  }
+  #stage > .slide.active .slide-inner > *:nth-child(1) { animation-delay: 40ms; }
+  #stage > .slide.active .slide-inner > *:nth-child(2) { animation-delay: 84ms; }
+  #stage > .slide.active .slide-inner > *:nth-child(3) { animation-delay: 128ms; }
+  #stage > .slide.active .slide-inner > *:nth-child(4) { animation-delay: 172ms; }
+  #stage > .slide.active .slide-inner > *:nth-child(5) { animation-delay: 216ms; }
+  #stage > .slide.active .slide-inner > *:nth-child(6) { animation-delay: 252ms; }
+  #stage > .slide.active .slide-inner > *:nth-child(7) { animation-delay: 284ms; }
+  #stage > .slide.active .slide-inner > *:nth-child(8) { animation-delay: 312ms; }
+  #stage > .slide.active .slide-inner > *:nth-child(n+9) { animation-delay: 336ms; }
+
+  /* The rule draws itself rather than fading, like a ruling pen */
+  @keyframes draw-rule { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  #stage > .slide.active .slide-inner > .rule {
+    animation: settle 300ms cubic-bezier(0.16,1,0.3,1) both,
+               draw-rule 520ms cubic-bezier(0.16,1,0.3,1) both;
+    transform-origin: left center;
+  }
+}
+
+/* ---- 2 · DEPARTMENT HEAD ----
+   A magazine section head is a label with a rule running out to the
+   margin. It turns a generic caption into a designed element and
+   gives every slide a consistent optical top edge. */
+.kicker {
+  display: flex;
+  align-items: baseline;
+  gap: 0.62em;
+  width: 100%;
+}
+.kicker::after {
+  content: "";
+  flex: 1 1 auto;
+  height: 1px;
+  min-width: 2ch;
+  background: var(--rule);
+  transform: translateY(-0.28em);
+}
+.kicker .src { flex: 0 0 auto; margin-left: 0; }
+/* Themes where the kicker is a solid chip keep the chip and drop the rule */
+:root[data-theme="neobrutalism"] .kicker,
+:root[data-theme="maxbrutalism"] .kicker { display: inline-flex; width: auto; }
+:root[data-theme="neobrutalism"] .kicker::after,
+:root[data-theme="maxbrutalism"] .kicker::after { display: none; }
+
+/* ---- 3 · OPTICAL HEADLINE SETTING ----
+   Cormorant at display size wants tighter tracking than it does at
+   text size, and headlines read better balanced than ragged. */
+h1 {
+  text-wrap: balance;
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+.title-slide h1,
+.module-divider h1 { letter-spacing: -0.022em; }
+.lead { text-wrap: pretty; }
+.subtitle { text-wrap: pretty; }
+
+/* ---- 4 · DIVIDERS BREAK THE GRID ----
+   The module numeral becomes page furniture: an oversized figure
+   set off the right edge of the canvas, ghosted back so it reads as
+   watermark rather than content. The module number is still stated
+   in the kicker, so this carries no information on its own and is
+   hidden from assistive tech. */
+@media (min-width: 901px) and (min-height: 481px) {
+  /* Positioned against the slide, not .slide-inner. An absolutely
+     positioned child still contributes to its container's scroll
+     size, so anchoring the bleed to .slide-inner made the auto-fit
+     think every divider overflowed. The slide already clips. */
+  :root { --ghost-alpha: 0.075; }
+  .module-divider .mod-num {
+    position: absolute;
+    right: -0.06em;
+    bottom: -0.20em;
+    margin: 0;
+    font-size: 372px;
+    line-height: 0.74;
+    letter-spacing: -0.055em;
+    color: var(--accent);
+    opacity: var(--ghost-alpha);
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+  }
+  /* Dark and high-chroma themes need a touch more or less presence */
+  :root[data-theme="blueprint"]     { --ghost-alpha: 0.13; }
+  :root[data-theme="maxbrutalism"]  { --ghost-alpha: 0.10; }
+  :root[data-theme="glassmorphism"] { --ghost-alpha: 0.10; }
+  :root[data-theme="maxbrutalism"] .module-divider .mod-num { -webkit-text-stroke: 0; }
+  .module-divider .kicker,
+  .module-divider h1,
+  .module-divider .subtitle,
+  .module-divider .mod-contents { position: relative; z-index: 1; }
+  /* Sized so a divider renders at full scale rather than being
+     auto-fit back down, which would waste the larger setting. */
+  .module-divider h1 { font-size: 84px; line-height: 0.99; margin-top: 6px; }
+  .module-divider .subtitle { max-width: 46ch; font-size: 25px; }
+  .module-divider .mod-contents { margin-top: 24px; padding-top: 15px; }
+}
+
+/* ---- 5 · FOLIO ----
+   A book sets its page number as a folio: small, ruled, quiet. */
+#meta-bar {
+  align-items: center;
+  gap: 9px;
+  letter-spacing: 0.06em;
+}
+#meta-bar::before {
+  content: "";
+  width: 26px;
+  height: 1px;
+  background: var(--rule);
+  display: block;
+}
+#meta-bar .current { letter-spacing: 0.02em; }
+
+/* ---- 6 · THE PAGE HAS AN EDGE ----
+   In cinematic mode the frame is a physical object against black, so
+   it gets a hairline and the faintest inked falloff at the corners.
+   Kept off the text column so it cannot cost contrast. */
+:root[data-cine="on"] #stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 14%, transparent);
+  background:
+    radial-gradient(120% 88% at 50% 50%,
+      transparent 62%,
+      color-mix(in srgb, var(--ink) 5%, transparent) 100%);
+}
+
+/* ---- 7 · PANEL CHOREOGRAPHY ----
+   The index, theme and search panels are the only places a viewer
+   makes a choice. Cards resolve in sequence so the list reads as an
+   ordered set rather than appearing wholesale. */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes card-in {
+    from { opacity: 0; transform: translateY(9px) scale(0.992); }
+    to   { opacity: 1; transform: none; }
+  }
+  #module-index.open #idx-list > li,
+  #theme-panel.open #th-list > li,
+  #theme-panel.open #aspect-list > li,
+  #search-panel.open #search-results > li {
+    animation: card-in 320ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  #module-index.open #idx-list > li:nth-child(1),
+  #theme-panel.open #th-list > li:nth-child(1) { animation-delay: 30ms; }
+  #module-index.open #idx-list > li:nth-child(2),
+  #theme-panel.open #th-list > li:nth-child(2) { animation-delay: 60ms; }
+  #module-index.open #idx-list > li:nth-child(3),
+  #theme-panel.open #th-list > li:nth-child(3) { animation-delay: 90ms; }
+  #module-index.open #idx-list > li:nth-child(4),
+  #theme-panel.open #th-list > li:nth-child(4) { animation-delay: 120ms; }
+  #module-index.open #idx-list > li:nth-child(5),
+  #theme-panel.open #th-list > li:nth-child(5) { animation-delay: 150ms; }
+  #module-index.open #idx-list > li:nth-child(6),
+  #theme-panel.open #th-list > li:nth-child(6) { animation-delay: 180ms; }
+  #module-index.open #idx-list > li:nth-child(7),
+  #theme-panel.open #th-list > li:nth-child(7) { animation-delay: 210ms; }
+  #module-index.open #idx-list > li:nth-child(n+8) { animation-delay: 240ms; }
+  #search-panel.open #search-results > li:nth-child(1) { animation-delay: 20ms; }
+  #search-panel.open #search-results > li:nth-child(2) { animation-delay: 44ms; }
+  #search-panel.open #search-results > li:nth-child(3) { animation-delay: 68ms; }
+  #search-panel.open #search-results > li:nth-child(n+4) { animation-delay: 88ms; }
+
+  /* Panels themselves fade the ground in behind the cards */
+  @keyframes ground-in { from { opacity: 0; } to { opacity: 1; } }
+  #module-index.open, #theme-panel.open, #search-panel.open {
+    animation: ground-in 200ms ease both;
+  }
+}
+
+/* ---- Refinements that are not motion ---- */
+
+/* Tables: a heavier rule under the head, hairlines between rows.
+   Reads as a printed table rather than a web table. */
+.pace-table thead th { border-bottom-width: 2px; }
+.pace-table tbody tr:last-child td { border-bottom: none; }
+
+/* Bullets sit on the baseline more convincingly as a short rule */
+ul.bullets li::before { border-radius: 1px; }
+
+/* Panels and callouts get optical inner spacing at display size */
+@media (min-width: 901px) and (min-height: 481px) {
+  .callout b:first-child { letter-spacing: -0.004em; }
+  .col-head { letter-spacing: -0.008em; }
+}
+
+/* Mobile keeps the numeral inline and drops the heavy motion */
+@media (max-width: 900px), (max-height: 480px) {
+  .kicker { display: block; width: auto; }
+  .kicker::after { display: none; }
+  .module-divider .mod-num { position: static; opacity: 1; font-size: 3rem; }
+}
 </style>
 </head>
 <body>
@@ -2720,7 +2955,7 @@ figure.fig .credit { font-size: 13px; margin-top: 5px; }
 <section class="slide module-divider" data-module="1" data-pace="Module opening" data-src="p1–13">
   <div class="slide-inner">
     <div class="kicker">Module one <span class="src">Rules of Procedure.pdf · p.1–13</span></div>
-    <div class="mod-num">01</div>
+    <div class="mod-num" aria-hidden="true">01</div>
     <h1>Rules of Procedure</h1>
     <p class="subtitle">The verified 60-minute teach. Every rule line on the next 24 slides maps to a page of the Conference Preparation Guide. Nothing here is trainer opinion.</p>
     <div class="mod-contents">
@@ -3465,7 +3700,7 @@ figure.fig .credit { font-size: 13px; margin-top: 5px; }
 <section class="slide module-divider" data-module="2" data-pace="Module opening" data-src="Communication.pdf">
   <div class="slide-inner">
     <div class="kicker">Module two <span class="src">Communication.pdf · p.1–5</span></div>
-    <div class="mod-num">02</div>
+    <div class="mod-num" aria-hidden="true">02</div>
     <h1>Effective Communication</h1>
     <p class="subtitle">You get ninety seconds on the Speakers List. Everything you researched arrives, or fails to arrive, through this module.</p>
     <div class="mod-contents">
@@ -3908,7 +4143,7 @@ figure.fig .credit { font-size: 13px; margin-top: 5px; }
 <section class="slide module-divider" data-module="3" data-pace="Module opening" data-src="Design Thinking.pdf">
   <div class="slide-inner">
     <div class="kicker">Module three <span class="src">Design Thinking.pdf · p.1–5</span></div>
-    <div class="mod-num">03</div>
+    <div class="mod-num" aria-hidden="true">03</div>
     <h1>Design Thinking</h1>
     <p class="subtitle">A committee agenda arrives as a topic, not a problem. This module is how you turn one into the other, and then into a solution you can defend.</p>
     <div class="mod-contents">
@@ -4305,7 +4540,7 @@ figure.fig .credit { font-size: 13px; margin-top: 5px; }
 <section class="slide module-divider" data-module="4" data-pace="Module opening" data-src="Entrepreneurship &amp; Innovation.pdf">
   <div class="slide-inner">
     <div class="kicker">Module four <span class="src">Entrepreneurship &amp; Innovation.pdf · p.1–6</span></div>
-    <div class="mod-num">04</div>
+    <div class="mod-num" aria-hidden="true">04</div>
     <h1>Entrepreneurship &amp; Innovation</h1>
     <p class="subtitle">Module 3 produced a solution. This module asks the question that decides whether it survives contact with the world: could anyone actually build and sustain it?</p>
     <div class="mod-contents">
@@ -4692,7 +4927,7 @@ figure.fig .credit { font-size: 13px; margin-top: 5px; }
 <section class="slide module-divider" data-module="5" data-pace="Module opening" data-src="Major Events.pdf">
   <div class="slide-inner">
     <div class="kicker">Module five <span class="src">Major Events that Changes the World.pdf · p.1–3</span></div>
-    <div class="mod-num">05</div>
+    <div class="mod-num" aria-hidden="true">05</div>
     <h1>Major Events That Changed the World</h1>
     <p class="subtitle">The Rules of Procedure require the <i>past of the agenda</i> as well as its current situation. This module is where that half comes from.</p>
     <div class="mod-contents">
@@ -5148,7 +5383,7 @@ figure.fig .credit { font-size: 13px; margin-top: 5px; }
 <section class="slide module-divider" data-module="6" data-pace="Module opening" data-src="company-portfolio-prep-track.md">
   <div class="slide-inner">
     <div class="kicker">Module six <span class="src">company-portfolio-prep-track.md</span></div>
-    <div class="mod-num">06</div>
+    <div class="mod-num" aria-hidden="true">06</div>
     <h1>Company Portfolio Prep Track</h1>
     <p class="subtitle">Same research spine as a country portfolio. What changes is the actor's interest: a company optimises for market position, regulatory freedom and shareholder value, not sovereignty or citizenry.</p>
     <div class="mod-contents">
@@ -5883,7 +6118,23 @@ figure.fig .credit { font-size: 13px; margin-top: 5px; }
     const cs = getComputedStyle(el);
     const avail = el.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
     const availW = el.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
-    const h = inner.scrollHeight, w = inner.scrollWidth;
+
+    /* Measure in-flow content only. Absolutely positioned children are
+       decoration that is meant to bleed past the edge (the ghosted
+       module numeral), and .slide-inner carries a transform, so it is
+       their containing block and they would otherwise inflate
+       scrollWidth/scrollHeight and shrink the slide for no reason.
+       offsetTop/offsetLeft are layout values, unaffected by scale. */
+    let h = 0, w = 0, counted = 0;
+    for (let i = 0; i < inner.children.length; i++) {
+      const c = inner.children[i];
+      if (getComputedStyle(c).position === 'absolute') continue;
+      h = Math.max(h, c.offsetTop + c.offsetHeight);
+      w = Math.max(w, c.offsetLeft + c.offsetWidth);
+      counted++;
+    }
+    if (!counted) { h = inner.scrollHeight; w = inner.scrollWidth; }
+
     if (h <= avail + 1 && w <= availW + 1) return;
     const k = Math.max(FIT_FLOOR, Math.min(avail / h, availW / w, 1));
     inner.style.setProperty('--fit', String(Math.floor(k * 1000) / 1000));
