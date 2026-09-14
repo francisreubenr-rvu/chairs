@@ -608,6 +608,35 @@ ol.compact.from-3 { counter-reset: item 2; }
 }
 @media (max-width: 900px) {
   .cols-3, .bda { grid-template-columns: 1fr; }
+  html, body {
+    overscroll-behavior-y: contain;
+  }
+  #stage, .slide {
+    -webkit-tap-highlight-color: transparent;
+    touch-action: pan-y;
+  }
+  /* Keep chrome clear of the home indicator / notches */
+  #hud {
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
+  }
+}
+@media (max-width: 900px) and (pointer: coarse) {
+  /* Soft hint that the sides are tappable, without covering content */
+  body::before,
+  body::after {
+    content: '';
+    position: fixed;
+    top: 18%;
+    bottom: 22%;
+    width: 10px;
+    pointer-events: none;
+    z-index: 20;
+    opacity: 0.22;
+    border-radius: 999px;
+    background: var(--accent, #9b1c1c);
+  }
+  body::before { left: 4px; }
+  body::after { right: 4px; }
 }
 @media (max-width: 760px) {
   .spill-2 { grid-template-columns: 1fr; }
@@ -2940,7 +2969,8 @@ ul.bullets li::before { border-radius: 1px; }
           <li class="sub">Your place, theme and sound choice are remembered in this browser, so you can close the tab and pick up where you stopped.</li>
           <li><b>Home / End</b>: first and last slide</li>
           <li><b>Swipe</b>: on touch devices only</li>
-          <li class="sub">Edge-click advance is deliberately disabled, so a stray click on the shared screen cannot move the deck.</li>
+          <li><b>Tap left / right</b>: previous / next slide on phones and tablets</li>
+          <li class="sub">Edge-click advance stays off on desktop, so a stray click on a shared screen cannot move the deck. Touch taps are intentional and only fire outside buttons and links.</li>
         </ul>
         <div class="callout">
           <b>Bottom-left chip</b> shows the current module. <b>Bottom-centre</b> shows the block within it. <b>Bottom-right</b> is the slide counter.
@@ -6445,17 +6475,62 @@ ul.bullets li::before { border-radius: 1px; }
     }
   });
 
+  /* Touch: swipe still works; short taps on left/right halves change slides.
+     Desktop edge-click stays disabled so shared-screen clicks cannot advance. */
   let touchX = null;
+  let touchY = null;
+  let touchTarget = null;
+  const TAP_MOVE_MAX = 18;
+  const SWIPE_MIN = 50;
+
+  function overlaysOpen() {
+    return indexEl.classList.contains('open')
+      || themePanel.classList.contains('open')
+      || searchPanel.classList.contains('open')
+      || letterEl.classList.contains('open');
+  }
+
+  function isInteractiveTouchTarget(node) {
+    if (!node || node === document.body || node === document.documentElement) return false;
+    if (node.closest) {
+      return !!node.closest('a, button, input, textarea, select, summary, label, [role="button"], [contenteditable="true"], #meta-bar, #module-index, #theme-panel, #search-panel, #letter, #resume-bar, #index-toggle, #theme-toggle, #aspect-toggle, #progress-track, .lt-card');
+    }
+    return false;
+  }
+
   document.addEventListener('touchstart', function (e) {
+    if (!e.changedTouches || !e.changedTouches[0]) return;
     touchX = e.changedTouches[0].screenX;
+    touchY = e.changedTouches[0].screenY;
+    touchTarget = e.target;
   }, { passive: true });
+
   document.addEventListener('touchend', function (e) {
-    if (touchX === null) return;
-    const dx = e.changedTouches[0].screenX - touchX;
+    if (touchX === null || !e.changedTouches || !e.changedTouches[0]) return;
+    const t = e.changedTouches[0];
+    const dx = t.screenX - touchX;
+    const dy = t.screenY - touchY;
+    const startX = touchX;
     touchX = null;
-    if (indexEl.classList.contains('open') || themePanel.classList.contains('open') || searchPanel.classList.contains('open')) return;
-    if (Math.abs(dx) < 50) return;
-    if (dx < 0) next(); else prev();
+    touchY = null;
+    const startTarget = touchTarget;
+    touchTarget = null;
+
+    if (overlaysOpen()) return;
+    if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > TAP_MOVE_MAX) return; /* vertical scroll */
+
+    /* Swipe */
+    if (Math.abs(dx) >= SWIPE_MIN) {
+      if (dx < 0) next(); else prev();
+      return;
+    }
+
+    /* Tap left / right half */
+    if (Math.abs(dx) > TAP_MOVE_MAX || Math.abs(dy) > TAP_MOVE_MAX) return;
+    if (isInteractiveTouchTarget(startTarget)) return;
+    const x = t.clientX;
+    const mid = window.innerWidth / 2;
+    if (x < mid) prev(); else next();
   }, { passive: true });
 
   /* Boot: an explicit #s42 link wins; otherwise offer to resume. */

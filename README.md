@@ -39,6 +39,10 @@ Module 1 reproduces the previously verified 24-slide Rules of Procedure deck unc
 | `S` | Slide sounds on/off (off by default) |
 | `F` | Fullscreen |
 | `Home` `End` | First / last slide |
+| Swipe (touch) | Previous / next |
+| Tap left / right (touch) | Previous / next on phones and tablets |
+
+Edge-click advance stays disabled on desktop so a shared-screen click cannot move the deck. On touch devices, a short tap on the left half goes back and the right half advances; swipes still work. Taps on links, buttons, and the chrome are ignored.
 
 ## Sizing
 
