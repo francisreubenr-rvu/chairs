@@ -1,6 +1,6 @@
 # Chairs
 
-Training deck for the **Diplomathon Global, Advanced Diplomat Cohort**. One hundred and five slides across six modules, built to be taught live over a screen share and revised alone afterwards.
+Training deck for the **Diplomathon Global, Advanced Diplomat Cohort**. One hundred and eighteen slides across six modules, built to be taught live over a screen share and revised alone afterwards.
 
 **Live:** https://chairs-xi.vercel.app
 
@@ -9,12 +9,12 @@ Training deck for the **Diplomathon Global, Advanced Diplomat Cohort**. One hund
 | Module | Slides | Source document |
 |---|---|---|
 | 0 · Orientation | 4 | Programme framing, provenance legend |
-| 1 · Rules of Procedure | 29 | `Rules of Procedure.pdf` p.1–13 |
+| 1 · Rules of Procedure | 33 | `Rules of Procedure.pdf` p.1–13 · `Conference Preparation Guide.pdf` p.6–9 |
 | 2 · Effective Communication | 14 | `Communication.pdf` p.1–5 |
 | 3 · Design Thinking | 13 | `Design Thinking.pdf` p.1–5 |
 | 4 · Entrepreneurship & Innovation | 14 | `Entrepreneurship & Innovation.pdf` p.1–6 |
 | 5 · Major Events That Changed the World | 15 | `Major Events that Changes the World.pdf` p.1–3 |
-| 6 · Company Portfolio Prep Track | 14 | `company-portfolio-prep-track.md` §1–§7 |
+| 6 · Company Portfolio Prep Track | 23 | `company-portfolio-prep-track.md` §1–§7 · `Diplomathon Portfolio Prep Guide.pdf` p.1–2 · `Research Sources for Company Portfolios.pdf` p.1–4 |
 | Close | 2 | Synthesis and source map |
 
 ## Provenance
@@ -25,7 +25,7 @@ Every line on a slide is tagged so a reader can tell instruction from rule:
 - **Green tag**: added instructional content written for this deck: named frameworks and documented dates, not Diplomathon rules.
 - **Green-bordered box**: trainer technique, not a rule and not source.
 
-Module 1 reproduces the previously verified 24-slide Rules of Procedure deck unchanged, plus three checkpoint recaps. Its per-slide page mapping is in `VERIFICATION.md` in the parent project.
+Module 1 reproduces the previously verified 24-slide Rules of Procedure deck unchanged, plus checkpoint recaps and four slides from the Conference Preparation Guide (precedence of motions, a working paper, resolution rules, clause vocabulary). Its per-slide page mapping is in `VERIFICATION.md` in the parent project.
 
 ## Controls
 
@@ -33,12 +33,15 @@ Module 1 reproduces the previously verified 24-slide Rules of Procedure deck unc
 |---|---|
 | `←` `→` `Space` | Previous / next slide |
 | `M` | Module index |
+| `G` | Overview grid of every slide |
 | `/` | Search all slides |
 | `T` | Theme picker (7 themes) |
 | `C` | Frame ratio: 16:9 or 2.39:1 cinematic scope |
 | `S` | Slide sounds on/off (off by default) |
 | `F` | Fullscreen |
+| `P` | Print the deck as study notes, one slide per page |
 | `Home` `End` | First / last slide |
+| `?` | Keyboard reference |
 
 ## Sizing
 
@@ -60,6 +63,9 @@ Edge-click advance is deliberately disabled so a stray click on a shared screen 
 ## For students
 
 - **Your place is remembered.** Close the tab and reopen it; the deck offers to resume where you stopped.
+- **Your progress is tracked.** Each slide you visit is marked, and every module shows how many of its slides you have covered.
+- **See the whole deck at once.** Press `G` for an overview grid of all 118 slides as true miniatures, grouped by module; click any to jump.
+- **Print study notes.** Press `P` to print the deck one slide per landscape page, ready to annotate.
 - **Slides are linkable.** The URL carries `#s42`, so you can send a classmate an exact slide.
 - **It works offline.** After the first visit a service worker caches the deck, so you can revise without a connection.
 - **Seven themes**, all checked to WCAG AA contrast. Your choice is remembered.

@@ -2,7 +2,7 @@
    The deck is one self-contained HTML file, so the service worker only
    has to hold that plus the Google Fonts it pulls. Students who open it
    once can revise with no connection afterwards. */
-const CACHE = 'chairs-v4';
+const CACHE = 'chairs-v5';
 const CORE = ['./', './index.html', './manifest.webmanifest'];
 
 self.addEventListener('install', (e) => {
