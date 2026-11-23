@@ -106,4 +106,4 @@ Eight historical photographs in Module 5, all public domain or CC BY-SA, credite
 
 - Root deep links are preserved: `/#s42` forwards to `/deck/#s42`.
 - The previous root-scope service worker is unregistered when the new home page loads, so returning visitors get the site rather than a cached deck.
-- `src/legacy-index.html` is a local migration copy and is gitignored.
+- The pre-rebuild single-file deck remains in git history.
