@@ -1,0 +1,25 @@
+/* Paper & Ink · 60-min verified ROP teach deck · impeccable-aligned */
+:root {
+  --bg: oklch(0.94 0.015 85);
+  --bg-raised: oklch(0.965 0.012 85);
+  --bg-deep: oklch(0.90 0.018 85);
+  --ink: oklch(0.22 0.02 55);
+  --ink-muted: oklch(0.45 0.018 55);
+  --ink-faint: oklch(0.62 0.015 55);
+  --accent: oklch(0.45 0.15 15);
+  --accent-soft: oklch(0.45 0.15 15 / 0.09);
+  --rule: oklch(0.22 0.02 55 / 0.12);
+  --ok: oklch(0.42 0.08 145);
+
+  --font-serif: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+  --font-mono: 'Source Code Pro', ui-monospace, Menlo, monospace;
+
+  --title-size: clamp(1.9rem, 5.2vw, 4.2rem);
+  --h1-size: clamp(1.45rem, 3.5vw, 2.95rem);
+  --body-size: clamp(0.95rem, 1.45vw, 1.36rem);
+  --sub-size: clamp(0.8rem, 1.1vw, 1.06rem);
+  --kicker-size: clamp(0.68rem, 0.92vw, 0.86rem);
+  --slide-padding: clamp(1rem, 3.8vw, 3.25rem);
+  --content-max: min(94vw, 1220px);
+}

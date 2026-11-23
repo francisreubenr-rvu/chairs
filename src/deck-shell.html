@@ -1,0 +1,141 @@
+<div id="progress-track"><div id="progress-furthest"></div><div id="progress-fill"></div></div>
+<div id="day-chip">Orientation</div>
+<div id="pace-chip">Programme opening</div>
+<div id="meta-bar"><span class="current">01</span><span>/ 00</span></div>
+<button id="index-toggle" aria-haspopup="dialog" aria-expanded="false">Index · M</button>
+<button id="overview-toggle" aria-haspopup="dialog" aria-expanded="false">Grid · G</button>
+<button id="theme-toggle" aria-haspopup="dialog" aria-expanded="false">Theme · T</button>
+<button id="aspect-toggle" aria-haspopup="dialog" aria-label="Change frame aspect ratio">16:9 · C</button>
+<button id="sound-toggle" aria-pressed="false" aria-label="Toggle slide sounds">Sound · S</button>
+<div id="credit-mark">Presented by Francis Reuben R</div>
+<a id="programme-link" href="../">Programme</a>
+<div id="sr-status" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+<div id="letter" role="dialog" aria-modal="true" aria-labelledby="lt-title" aria-hidden="true">
+  <div class="lt-card">
+    <div class="lt-kicker">Diplomathon Global · Advanced Diplomat Cohort</div>
+    <h2 id="lt-title">Welcome to Chairs</h2>
+    <div class="lt-rule"></div>
+    <p>You are looking at the whole training programme in one place: <b>six modules, 118 slides</b>, covering the Rules of Procedure, Effective Communication, Design Thinking, Entrepreneurship &amp; Innovation, the Major Events that shaped the world you will debate, and how to research a company portfolio to primary-source standard.</p>
+    <p>Two things worth knowing before you start. First, every line is <b>tagged with where it came from</b>: a crimson tag means it traces to a Diplomathon document at the page named, and in Module 1 those are binding rules. A green tag means it is added teaching, useful but not procedure. You should always be able to tell the difference between what the rules say and what anyone, including me, thinks about them.</p>
+    <p>Second, this is built to be revised alone, not only watched once:</p>
+    <ul>
+      <li><b>Your place is saved.</b> Close the tab and it offers to bring you back.</li>
+      <li><b>It works offline</b> after your first visit.</li>
+      <li><b>Your progress is tracked.</b> Each module shows how many slides you have visited.</li>
+      <li><kbd>/</kbd> <b>searches</b> all 118 slides.</li>
+      <li><kbd>M</kbd> jumps between modules.</li>
+      <li><kbd>G</kbd> opens a <b>grid of every slide</b> so you can see the whole deck and jump anywhere.</li>
+      <li><kbd>P</kbd> <b>prints</b> the deck as study notes, one slide per page.</li>
+      <li><kbd>T</kbd> changes theme, <kbd>F</kbd> goes fullscreen, <kbd>?</kbd> lists every key.</li>
+      <li>Any slide is <b>linkable</b>: send a classmate the URL.</li>
+    </ul>
+    <p class="muted">The committee rewards the delegate who can make a claim, name its source, propose an action, and defend all three under challenge. Everything here is aimed at that.</p>
+    <div class="lt-sign">
+      <div class="lt-name">Francis Reuben R<span>Trainer · Advanced Diplomat Cohort</span></div>
+      <button type="button" id="lt-start">Start the deck</button>
+    </div>
+  </div>
+</div>
+
+<div id="resume-bar" role="status">
+  <span class="rb-text">You left off at <b id="rb-slide"></b>.</span>
+  <button type="button" id="rb-go">Resume</button>
+  <button type="button" class="ghost" id="rb-dismiss">Start over</button>
+</div>
+
+<div id="search-panel" role="dialog" aria-modal="true" aria-label="Search slides" aria-hidden="true">
+  <div class="sp-inner">
+    <input id="search-input" type="search" autocomplete="off" spellcheck="false"
+           placeholder="Search all slides. Try &quot;quorum&quot;, &quot;yield&quot;, &quot;PESTEL&quot;">
+    <p id="search-meta">Type to search · Enter opens the top hit · arrows to move · Esc to close</p>
+    <ul id="search-results"></ul>
+    <p id="search-empty" hidden>No slide matches that.</p>
+  </div>
+</div>
+
+<div id="theme-panel" role="dialog" aria-modal="true" aria-label="Theme picker" aria-hidden="true">
+  <div class="th-inner">
+    <h2>Theme</h2>
+    <p class="th-hint">Click to apply · Esc or T to close · your choice is remembered</p>
+    <ol id="th-list"></ol>
+
+    <div id="aspect-block">
+      <h3>Frame</h3>
+      <p class="ab-hint">Cinematic ratios letterbox on a 16:9 screen · C cycles</p>
+      <ul id="aspect-list"></ul>
+    </div>
+  </div>
+</div>
+
+<div id="module-index" role="dialog" aria-modal="true" aria-label="Module index" aria-hidden="true">
+  <div class="idx-inner">
+    <h2>Module index</h2>
+    <p class="idx-hint">Click a module to jump · Esc or M to close</p>
+    <ol id="idx-list"></ol>
+  </div>
+</div>
+
+<div id="overview" role="dialog" aria-modal="true" aria-label="Slide overview" aria-hidden="true">
+  <div class="ov-inner">
+    <div class="ov-head">
+      <div>
+        <h2>Overview</h2>
+        <p class="ov-hint">Click a slide to jump · arrows move · Esc or G closes</p>
+      </div>
+      <div class="ov-actions">
+        <p class="ov-progress"><b id="ov-visited">0</b> of <span id="ov-total">0</span> slides visited</p>
+        <button type="button" id="ov-print">Print · P</button>
+      </div>
+    </div>
+    <div id="ov-grid"></div>
+  </div>
+</div>
+
+<div id="help-panel" role="dialog" aria-modal="true" aria-label="Keyboard controls" aria-hidden="true">
+  <div class="hp-card">
+    <h2>Controls</h2>
+    <p class="hp-hint">Esc or ? to close</p>
+    <ul class="hp-keys">
+      <li><span class="hp-keys-group"><kbd>←</kbd><kbd>→</kbd><kbd>Space</kbd></span><span class="hp-what">Previous / next slide</span></li>
+      <li><span class="hp-keys-group"><kbd>M</kbd></span><span class="hp-what">Module index</span></li>
+      <li><span class="hp-keys-group"><kbd>G</kbd></span><span class="hp-what">Overview grid of every slide</span></li>
+      <li><span class="hp-keys-group"><kbd>/</kbd></span><span class="hp-what">Search all slides</span></li>
+      <li><span class="hp-keys-group"><kbd>T</kbd></span><span class="hp-what">Theme and frame picker</span></li>
+      <li><span class="hp-keys-group"><kbd>C</kbd></span><span class="hp-what">Frame ratio: 16:9 or 2.39:1 scope</span></li>
+      <li><span class="hp-keys-group"><kbd>S</kbd></span><span class="hp-what">Slide sounds on / off</span></li>
+      <li><span class="hp-keys-group"><kbd>F</kbd></span><span class="hp-what">Fullscreen</span></li>
+      <li><span class="hp-keys-group"><kbd>P</kbd></span><span class="hp-what">Print the deck as study notes, one slide per page</span></li>
+      <li><span class="hp-keys-group"><kbd>Home</kbd><kbd>End</kbd></span><span class="hp-what">First / last slide</span></li>
+      <li><span class="hp-keys-group"><kbd>?</kbd></span><span class="hp-what">This reference</span></li>
+    </ul>
+    <p class="hp-note">Edge-click advance is deliberately disabled so a stray click on a shared screen cannot move the deck. Swipe works on touch devices. Your place, theme and progress are saved on this device.</p>
+  </div>
+</div>
+
+<!-- ============================================================
+     DIPLOMATHON GLOBAL · ADVANCED DIPLOMAT COHORT · MASTER DECK
+
+     PROVENANCE CONVENTION
+       .src            crimson  = line traces to a Diplomathon source document
+                                  (Rules of Procedure.pdf, Communication.pdf,
+                                   Design Thinking.pdf, Entrepreneurship &
+                                   Innovation.pdf, Major Events that Changes
+                                   the World.pdf, company-portfolio-prep-track.md)
+       .src.expand     green    = added instructional content written for this
+                                  deck. Named frameworks and dates only; no
+                                  invented statistics, no fabricated cases.
+       .callout.practice        = trainer technique, not a rule and not source.
+
+     Module 1 reproduces the verified 24-slide ROP deck unchanged.
+     See VERIFICATION.md for its per-slide page mapping.
+     ============================================================ -->
+
+<!-- ===================== MODULE 0 · ORIENTATION ===================== -->
+
+<!-- TITLE -->
+<div id="stage-wrap">
+<div id="stage">
+{{CONTENT}}
+</div>
+</div>
