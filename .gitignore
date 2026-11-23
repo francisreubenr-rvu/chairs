@@ -1,4 +1,6 @@
+dist/
+node_modules/
+.vercel/
 .DS_Store
 ._*
-.vercel
-node_modules/
+src/legacy-index.html
