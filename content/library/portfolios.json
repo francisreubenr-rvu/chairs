@@ -2,9 +2,11 @@
   "committees": [
     "Education, HR & Future of Work",
     "United Panel for Future Ready Education (UPFRE)",
-    "Global Space Policy and Trade Council",
+    "Global Space Policy and Trade Council (GSPTC)",
     "Sports, Health & Bioscience",
-    "Future Tourism Forum"
+    "Future Tourism Forum",
+    "World Council on Future Food and Health",
+    "Media, Gaming & Entertainment"
   ],
   "portfolios": [
     {
@@ -39,8 +41,8 @@
     {
       "id": "space-adventures",
       "company": "Space Adventures",
-      "committee": "Global Space Policy and Trade Council",
-      "sheet": "mobility",
+      "committee": "Global Space Policy and Trade Council (GSPTC)",
+      "sheet": "space",
       "purpose": "Founded 1998. It does not build rockets; it arranges flights. It arranged all nine private-citizen flights to the ISS, all on Russia's Soyuz.",
       "angles": ["Rules for civilian space travel"],
       "primary": [
@@ -142,7 +144,7 @@
       "id": "tripadvisor",
       "company": "Tripadvisor",
       "committee": "Future Tourism Forum",
-      "sheet": "mobility",
+      "sheet": "tourism",
       "purpose": "Travel platform. Group brands: Tripadvisor, Viator, TheFork.",
       "angles": ["Fake reviews", "Trust and safety", "Tourism economics"],
       "primary": [
@@ -187,6 +189,96 @@
         "EU GDPR, for athlete biometric data"
       ],
       "notes": []
+    },
+    {
+      "id": "palantir",
+      "company": "Palantir Technologies",
+      "committee": "World Council on Future Food and Health",
+      "sheet": "food",
+      "purpose": "Builds data platforms (Foundry, AIP, Gotham) for governments and hospitals. It ran the NHS Federated Data Platform and US health-data work during COVID.",
+      "agenda": "Government's role in regulating AI-driven personalised nutrition for global health equity",
+      "angles": ["Public-private data partnerships", "Strong privacy safeguards", "Surveillance and data ownership"],
+      "primary": [
+        "palantir.com, product and sector pages, Healthcare",
+        "investors.palantir.com, annual report and 10-K, risk factors on regulation",
+        "palantir.com/newsroom"
+      ],
+      "bodies": [
+        "WHO, Ethics and Governance of AI for Health, who.int",
+        "FAO, food security and nutrition, fao.org",
+        "Codex Alimentarius, food standards, fao.org/fao-who-codexalimentarius",
+        "NHS England, Federated Data Platform, england.nhs.uk"
+      ],
+      "laws": [
+        "EU AI Act",
+        "US FDA, AI-enabled medical devices",
+        "India's DPDP Act 2023, meity.gov.in"
+      ],
+      "notes": ["Argue for public-private data partnerships with strong privacy safeguards. Expect pushback on surveillance and data ownership."]
+    },
+    {
+      "id": "sony-interactive-entertainment",
+      "company": "Sony Interactive Entertainment",
+      "committee": "Future Tourism Forum",
+      "sheet": "tourism",
+      "purpose": "PlayStation and PS VR2 can deliver virtual travel, and games like Ghost of Tsushima have driven real visits to the places they depict.",
+      "agenda": "Strategies for tourism economies to move into virtual tourism",
+      "angles": ["Virtual tourism", "Games complement physical tourism", "Studio partnerships and IP protection"],
+      "primary": [
+        "sonyinteractive.com, corporate and news",
+        "sony.com/en/SonyInfo/IR, Sony Group Integrated Report",
+        "blog.playstation.com, product and VR announcements"
+      ],
+      "bodies": [
+        "UN Tourism, formerly UNWTO, untourism.int",
+        "World Travel & Tourism Council, wttc.org",
+        "OECD Tourism Trends and Policies, oecd.org",
+        "Entertainment Software Association, theesa.com",
+        "Newzoo games market reports, newzoo.com"
+      ],
+      "laws": [],
+      "notes": ["Argue that games complement physical tourism, and that governments should partner with studios and protect IP."]
+    },
+    {
+      "id": "framestore",
+      "company": "Framestore",
+      "committee": "Media, Gaming & Entertainment",
+      "sheet": "tourism",
+      "purpose": "London visual effects studio behind Gravity, Blade Runner 2049 and Paddington, with an immersive and experiential arm.",
+      "angles": ["AI as a tool for artists", "Credit and consent for digital likenesses", "Labelling of synthetic media"],
+      "primary": [
+        "framestore.com, work, news and the Immersive division"
+      ],
+      "bodies": [
+        "Visual Effects Society, visualeffectssociety.com",
+        "UK Screen Alliance, ukscreenalliance.co.uk",
+        "British Film Institute research, bfi.org.uk",
+        "SAG-AFTRA AI agreements, sagaftra.org",
+        "WIPO, AI and IP, wipo.int"
+      ],
+      "laws": [
+        "EU AI Act deepfake transparency rules"
+      ],
+      "notes": []
+    },
+    {
+      "id": "landspace",
+      "company": "LandSpace",
+      "committee": "Global Space Policy and Trade Council (GSPTC)",
+      "sheet": "space",
+      "purpose": "Private Chinese launch company. Its Zhuque-2 was the first methane-fuelled rocket to reach orbit in July 2023, and it is working on reusable rockets.",
+      "angles": ["Open launch markets", "Fair access for private firms from all countries", "Export controls that do not lock out non-US companies"],
+      "primary": [
+        "landspace.com, company news and rockets"
+      ],
+      "bodies": [
+        "UNOOSA, Outer Space Treaty and COPUOS, unoosa.org",
+        "China National Space Administration, cnsa.gov.cn",
+        "US FAA Commercial Space Transportation, faa.gov/space",
+        "ITU, satellite spectrum and orbits, itu.int"
+      ],
+      "laws": [],
+      "notes": ["SpaceNews for industry news, spacenews.com."]
     }
   ]
 }

@@ -62,14 +62,14 @@ function portfolioPanel(p) {
 function librarySlides() {
   const all = library.portfolios;
   const byId = (id) => all.find((p) => p.id === id);
-  const roster = `<p class="lead">Seven portfolios across five committees. Find your line before you research anything else: the committee decides which sources count.</p>
+  const roster = `<p class="lead">Eleven portfolios across seven committees. Find your line before you research anything else: the committee decides which sources count.</p>
     <div class="rule"></div>
     <table class="pace-table dense wide-first">
       <thead><tr><th>Portfolio</th><th>Committee</th><th>The angle that decides the room</th></tr></thead>
       <tbody>${all.map((p) => `<tr><td>${escapeHtml(p.company)}</td><td>${escapeHtml(p.committee)}</td><td>${escapeHtml(p.angles.join(', '))}</td></tr>`).join('')}</tbody>
     </table>
     <div class="callout">
-      <b>Three portfolios share one committee.</b> BioSerenity, the US HHS Secretary and ASICS all sit in Sports, Health &amp; Bioscience. Expect the same agenda argued from a device maker, a regulator and a performance brand.
+      <b>Committees now overlap.</b> Sports, Health &amp; Bioscience holds three portfolios. Future Tourism and the Space Council hold two each, which makes allies and hostile questions easier to find.
     </div>`;
 
   const sheet = (title, kicker, ids, cols) => {
@@ -77,11 +77,21 @@ function librarySlides() {
     return librarySlide(title, kicker, inner, 'Research Sources p.1–4');
   };
 
+  const food = byId('palantir');
+  const foodAgenda = `<div class="panel"><div class="col-head">The agenda</div><ul class="bullets">
+    <li><b>Agenda</b><span class="sub">${escapeHtml(food.agenda)}</span></li>
+    <li><b>What to argue</b><span class="sub">${escapeHtml(food.notes.join(' '))}</span></li>
+    <li><b>Citation order</b><span class="sub">Palantir's own reports first, then WHO, FAO, Codex Alimentarius and NHS England, then the EU AI Act, FDA and India's DPDP Act.</span></li>
+  </ul></div>`;
+  const foodSlide = librarySlide('One company at the centre of the food and health agenda', 'Portfolio Library · food and health data', `<div class="rule"></div><div class="cols-2">${portfolioPanel({ ...food, notes: [] })}${foodAgenda}</div>`, 'Research Sources p.1–4');
+
   return [
-    librarySlide('Who is in which room, and what each one has to prove', 'Portfolio Library · seven portfolios', roster, 'Research Sources p.1–4'),
+    librarySlide('Who is in which room, and what each one has to prove', 'Portfolio Library · eleven portfolios', roster, 'Research Sources p.1–4'),
     sheet('Two companies selling into the same skills agenda', 'Portfolio Library · education and skills', ['sap-successfactors', 'cisco-systems'], 2),
-    sheet('Two industries where the regulator is younger than the product', 'Portfolio Library · space and tourism', ['space-adventures', 'tripadvisor'], 2),
+    sheet('Two launch companies, two regulatory universes', 'Portfolio Library · space', ['space-adventures', 'landspace'], 2),
     sheet('Three portfolios in one committee, three different kinds of power', 'Portfolio Library · health and sport', ['bioserenity', 'us-hhs', 'asics'], 3),
+    sheet('Tourism, games and synthetic media', 'Portfolio Library · tourism and media', ['tripadvisor', 'sony-interactive-entertainment', 'framestore'], 3),
+    foodSlide,
   ];
 }
 
@@ -299,7 +309,7 @@ function homePage() {
     <h1>Chairs</h1>
     <p class="tagline">${escapeHtml(site.tagline)}</p>
     <div class="meta-row">
-      <span>6 modules</span><span>7 portfolios</span><span>114-slide deck</span><span>Taught live, read alone</span>
+      <span>6 modules</span><span>${library.portfolios.length} portfolios</span><span>${slides.length}-slide deck</span><span>Taught live, read alone</span>
     </div>
     <div class="actions">
       <a class="btn" href="/modules/rules-of-procedure/">Start with Module One</a>
@@ -315,7 +325,7 @@ function homePage() {
     <a class="contents-row library" href="/library/">
       <span class="cr-n">Ref</span>
       <span><span class="cr-t">Portfolio Library</span><span class="cr-d">${escapeHtml(site.library.note)}</span></span>
-      <span class="cr-c">7 portfolios</span>
+      <span class="cr-c">${library.portfolios.length} portfolios</span>
     </a>
   </div>
 </section>
@@ -349,7 +359,7 @@ function homePage() {
     </div>
     <div class="panel">
       <div class="col-head">Library</div>
-      <p>Seven portfolios and their sources. Reference material, kept out of the taught sequence because it is looked up, not taught.</p>
+      <p>Eleven portfolios and their sources. Reference material, kept out of the taught sequence because it is looked up, not taught.</p>
     </div>
   </div>
 </section>`;
@@ -444,6 +454,7 @@ function portfolioCard(p) {
   <h3>${escapeHtml(p.company)}</h3>
   ${p.delegate ? `<p class="delegate">${escapeHtml(p.delegate)}</p>` : ''}
   <p class="purpose">${escapeHtml(p.purpose)}</p>
+  ${p.agenda ? `<p class="agenda"><span>Agenda</span>${escapeHtml(p.agenda)}</p>` : ''}
   ${p.bestAngle ? `<p class="best">${escapeHtml(p.bestAngle)}</p>` : ''}
   <div class="angle-chips">${angles}</div>
   <details>
@@ -478,6 +489,7 @@ function libraryPage() {
     <div class="breadcrumb"><a href="/">Programme</a> <span>/</span> <span>Library</span></div>
     <h1>Portfolio Library</h1>
     <p class="note">${escapeHtml(site.library.note)}</p>
+    ${site.library.citation ? `<p class="citation-rule">${escapeHtml(site.library.citation)}</p>` : ''}
     <div class="module-meta">${site.library.sources.map((s) => `<span>${escapeHtml(s)}</span>`).join('')}</div>
   </div>
 </div>
@@ -521,7 +533,7 @@ function searchIndex() {
       t: p.company,
       m: `Library · ${p.committee}`,
       u: `/library/#${p.id}`,
-      x: stripTags([p.purpose, ...p.angles, ...p.primary, ...p.laws].join(' ')).slice(0, 600),
+      x: stripTags([p.purpose, p.agenda || '', ...p.angles, ...p.primary, ...p.bodies, ...p.laws, ...p.notes].join(' ')).slice(0, 600),
     });
   }
   return { entries };

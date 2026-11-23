@@ -828,6 +828,24 @@ ol.compact.from-6 { counter-reset: item 5; }
   color: var(--accent);
 }
 .folio .purpose { font-size: 0.95rem; line-height: 1.5; color: var(--ink-muted); margin-top: 0.55rem; }
+.folio .agenda {
+  margin-top: 0.55rem; padding-left: 0.7rem;
+  border-left: 2px solid var(--rule);
+  font-size: 0.88rem; line-height: 1.45; color: var(--ink);
+}
+.folio .agenda span {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 8.5px; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 0.12rem;
+}
+.citation-rule {
+  margin-top: 0.9rem; padding-left: 0.8rem;
+  border-left: 2px solid var(--accent);
+  font-size: 0.92rem; line-height: 1.5;
+  color: var(--ink-muted); max-width: 74ch;
+}
 .folio .best {
   margin-top: 0.7rem; padding-left: 0.8rem;
   border-left: 2px solid var(--accent);

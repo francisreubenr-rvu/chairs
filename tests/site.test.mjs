@@ -26,7 +26,7 @@ function walk(dir) {
 test('deck contains every slide', () => {
   const deck = read('deck/index.html');
   const sections = deck.match(/<section class="slide/g) || [];
-  assert.equal(sections.length, 114);
+  assert.equal(sections.length, 116);
 });
 
 test('deck is self-contained', () => {
@@ -66,7 +66,7 @@ test('source parts stay in sync with the build', () => {
   }
   assert.equal(total, 110);
   const portfolios = JSON.parse(readFileSync(join(ROOT, 'content/library/portfolios.json'), 'utf8'));
-  assert.equal(portfolios.portfolios.length, 7);
+  assert.equal(portfolios.portfolios.length, 11);
 });
 
 test('every site page exists with exactly one h1', () => {
@@ -92,7 +92,7 @@ test('module readers carry every section and a programme note', () => {
 test('library renders every portfolio with sources', () => {
   const html = read('library/index.html');
   const cards = html.match(/<article class="folio"/g) || [];
-  assert.equal(cards.length, 7);
+  assert.equal(cards.length, 11);
   assert.match(html, /SAP SuccessFactors/);
   assert.match(html, /EU AI Act/);
   assert.match(html, /Portfolio Library/);

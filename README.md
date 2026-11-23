@@ -17,7 +17,7 @@ The Advanced Diplomat Cohort programme for Diplomathon Global. Six taught module
 | `/modules/entrepreneurship/` | Module 4 reader |
 | `/modules/major-events/` | Module 5 reader |
 | `/modules/company-portfolio/` | Module 6 reader |
-| `/library/` | Seven portfolios, sources and laws to cite, filterable by committee |
+| `/library/` | Eleven portfolios, sources and laws to cite, filterable by committee |
 | `/deck/` | The presentation deck, self-contained and offline capable |
 
 ## The programme
@@ -31,10 +31,10 @@ The Advanced Diplomat Cohort programme for Diplomathon Global. Six taught module
 | 4 · Entrepreneurship & Innovation | 14 | `Entrepreneurship & Innovation.pdf` p.1–6 |
 | 5 · Major Events That Changed the World | 15 | `Major Events that Changes the World.pdf` p.1–3 |
 | 6 · Company Portfolio | 19 | `company-portfolio-prep-track.md` §1–§7 · `Portfolio Prep Guide.pdf` p.1–2 · `Research Sources for Company Portfolios.pdf` p.1–4 |
-| Portfolio Library | 4 appendix slides | `Research Sources for Company Portfolios.pdf` p.1–4 |
+| Portfolio Library | 6 appendix slides | `Research Sources for Company Portfolios.pdf` p.1–4 |
 | Close | 2 | Synthesis, source map |
 
-Deck total: 114 slides. Reading pages: 110 taught sections, plus seven portfolio entries.
+Deck total: 116 slides. Reading pages: 104 taught sections, plus eleven portfolio entries.
 
 Module 1 is procedure only. Research, sourcing and company portfolio work sit in Module 6, where they belong.
 
@@ -63,7 +63,7 @@ Vercel runs `node build.mjs` and serves `dist/`.
 content/
   site.json                  programme metadata, module outcomes and notes
   parts/*.html               slides in presentation order, one file per module
-  library/portfolios.json    seven portfolio records
+  library/portfolios.json    eleven portfolio records
 src/
   tokens.css                 colour and type tokens
   deck.css                   presentation styles

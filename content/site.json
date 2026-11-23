@@ -76,10 +76,11 @@
   ],
   "library": {
     "title": "Portfolio Library",
-    "note": "Seven portfolios across five committees. Each entry carries the sources to cite and the laws that constrain it. This is reference material, not a taught module.",
+    "note": "Eleven portfolios across seven committees. Each entry carries the sources to cite and the laws that constrain it. This is reference material, not a taught module.",
     "sources": [
       "Research Sources for Company Portfolios p.1\u20134",
       "Diplomathon Portfolio Prep Guide p.1\u20132"
-    ]
+    ],
+    "citation": "Cite the company's own reports first, then the regulators and global bodies for its industry. Company or body, Title, Year, page or section, URL. News outlets such as Reuters, the FT and Bloomberg count as secondary."
   }
 }
