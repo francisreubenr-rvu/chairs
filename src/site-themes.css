@@ -1,0 +1,265 @@
+/* ============================================================
+   CHAIRS · THEMES
+   The seven deck themes, retuned for reading surfaces.
+   Accent text colours are darkened where the deck's brand
+   colour fails 4.5:1 at small sizes.
+   ============================================================ */
+
+:root {
+  --accent-fill: var(--accent);
+  --accent-fill-ink: #FFFFFF;
+  --panel-bg: var(--bg-raised);
+  --panel-border: 1px solid var(--rule);
+  --panel-radius: 0px;
+  --panel-shadow: none;
+  --panel-blur: none;
+  --callout-bg: var(--accent-soft);
+  --callout-border: 1px solid color-mix(in srgb, var(--accent) 24%, transparent);
+  --chip-bg: transparent;
+  --chip-border: 1px solid var(--rule);
+  --chip-radius: 0px;
+  --field-image:
+    linear-gradient(var(--rule) 1px, transparent 1px),
+    linear-gradient(90deg, var(--rule) 1px, transparent 1px);
+  --field-size: 44px 44px;
+  --heading-transform: none;
+}
+
+/* ---------- neobrutalism ---------- */
+
+:root[data-theme="neobrutalism"] {
+  --bg: #FAF7F0;
+  --bg-raised: #FFFFFF;
+  --bg-deep: #FFF3C4;
+  --ink: #0A0A0A;
+  --ink-muted: #3D3D3D;
+  --ink-faint: #5C5C5C;
+  --accent: #D62828;
+  --accent-soft: #FFE8E8;
+  --rule: #0A0A0A;
+  --ok: #1B6B3A;
+  --font-serif: 'Space Grotesk', 'Source Sans 3', system-ui, sans-serif;
+  --font-sans: 'Space Grotesk', 'Source Sans 3', system-ui, sans-serif;
+  --panel-bg: #FFFFFF;
+  --panel-border: 3px solid #0A0A0A;
+  --panel-radius: 0px;
+  --panel-shadow: 5px 5px 0 #0A0A0A;
+  --callout-bg: #FFF3C4;
+  --callout-border: 3px solid #0A0A0A;
+  --chip-bg: #FFFFFF;
+  --chip-border: 3px solid #0A0A0A;
+  --chip-radius: 0px;
+  --field-image:
+    linear-gradient(rgba(10,10,10,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10,10,10,0.07) 1px, transparent 1px);
+  --field-size: 52px 52px;
+  --accent-fill: #D62828;
+  --accent-fill-ink: #FFFFFF;
+  --heading-transform: none;
+}
+:root[data-theme="neobrutalism"] .lesson .kicker {
+  background: #D62828; color: #FFFFFF;
+  display: inline-block; padding: 3px 8px;
+}
+:root[data-theme="neobrutalism"] .lesson .kicker .src { color: #FFF3C4; }
+:root[data-theme="neobrutalism"] .callout.practice { background: #DCF5E6; border-color: #0A0A0A; }
+:root[data-theme="neobrutalism"] .col-head { border-bottom-width: 3px; border-bottom-color: #0A0A0A; }
+:root[data-theme="neobrutalism"] .pace-table th { background: #FFD84D; color: #0A0A0A; }
+:root[data-theme="neobrutalism"] .pace-table th,
+:root[data-theme="neobrutalism"] .pace-table td { border-bottom: 2px solid #0A0A0A; }
+
+/* ---------- max brutalism ---------- */
+
+:root[data-theme="maxbrutalism"] {
+  --bg: #CFCAC0;
+  --bg-raised: #F0EDE6;
+  --bg-deep: #E2DED5;
+  --ink: #000000;
+  --ink-muted: #2E2E2E;
+  --ink-faint: #3A3A3A;
+  --accent: #9A2A00;
+  --accent-soft: #FFE2D6;
+  --rule: #000000;
+  --ok: #14532D;
+  --font-serif: 'Archivo Black', 'Space Grotesk', Impact, sans-serif;
+  --font-sans: 'Space Grotesk', 'Source Sans 3', system-ui, sans-serif;
+  --panel-bg: #F0EDE6;
+  --panel-border: 4px solid #000000;
+  --panel-radius: 0px;
+  --panel-shadow: 8px 8px 0 #000000;
+  --callout-bg: #D93A00;
+  --callout-border: 4px solid #000000;
+  --chip-bg: #F0EDE6;
+  --chip-border: 3px solid #000000;
+  --chip-radius: 0px;
+  --field-image: repeating-linear-gradient(45deg, rgba(0,0,0,0.045) 0 2px, transparent 2px 12px);
+  --field-size: auto;
+  --accent-fill: #000000;
+  --accent-fill-ink: #FFD100;
+  --heading-transform: uppercase;
+}
+:root[data-theme="maxbrutalism"] .callout { color: #FFFFFF; }
+:root[data-theme="maxbrutalism"] .callout b { color: #FFD100; }
+:root[data-theme="maxbrutalism"] .callout.practice { background: #14532D; border-color: #000000; color: #FFFFFF; }
+:root[data-theme="maxbrutalism"] .callout.practice .tag { color: #9AE6B4; }
+:root[data-theme="maxbrutalism"] .kicker { letter-spacing: 0.08em; }
+:root[data-theme="maxbrutalism"] .pace-table th { background: #000000; color: #FFD100; }
+:root[data-theme="maxbrutalism"] .pace-table th,
+:root[data-theme="maxbrutalism"] .pace-table td { border-bottom: 3px solid #000000; }
+:root[data-theme="maxbrutalism"] .col-head { border-bottom: 4px solid #000000; }
+
+/* ---------- claymorphism ---------- */
+
+:root[data-theme="claymorphism"] {
+  --bg: #EFE4DA;
+  --bg-raised: #FBF5F0;
+  --bg-deep: #E7D9CD;
+  --ink: #33241B;
+  --ink-muted: #6B5445;
+  --ink-faint: #6B5445;
+  --accent: #8F341C;
+  --accent-soft: #F8DFD6;
+  --rule: rgba(51, 36, 27, 0.14);
+  --ok: #2F6F5E;
+  --font-serif: 'Nunito', 'Source Sans 3', system-ui, sans-serif;
+  --font-sans: 'Nunito', 'Source Sans 3', system-ui, sans-serif;
+  --panel-bg: #FBF5F0;
+  --panel-border: 1px solid rgba(255,255,255,0.9);
+  --panel-radius: 22px;
+  --panel-shadow: 8px 8px 18px rgba(140,110,88,0.26), -6px -6px 14px rgba(255,255,255,0.85);
+  --callout-bg: #F8DFD6;
+  --callout-border: 1px solid rgba(255,255,255,0.9);
+  --chip-bg: #FBF5F0;
+  --chip-border: 1px solid rgba(255,255,255,0.9);
+  --chip-radius: 999px;
+  --field-image:
+    radial-gradient(circle at 18% 14%, rgba(255,255,255,0.6) 0%, transparent 46%),
+    radial-gradient(circle at 84% 82%, rgba(214,168,138,0.34) 0%, transparent 52%);
+  --field-size: auto;
+  --accent-fill: #C0492B;
+  --accent-fill-ink: #FBF5F0;
+  --heading-transform: none;
+}
+:root[data-theme="claymorphism"] .rule { border-radius: 999px; }
+:root[data-theme="claymorphism"] .col-head { border-bottom: none; }
+:root[data-theme="claymorphism"] ul.bullets li::before { border-radius: 999px; height: 3px; }
+:root[data-theme="claymorphism"] .checklist li::before { border-radius: 7px; }
+
+/* ---------- glassmorphism ---------- */
+
+:root[data-theme="glassmorphism"] {
+  --bg: #E8EEF5;
+  --bg-raised: rgba(255,255,255,0.62);
+  --bg-deep: rgba(255,255,255,0.44);
+  --ink: #12212E;
+  --ink-muted: #3B5163;
+  --ink-faint: #466072;
+  --accent: #0B5FA5;
+  --accent-soft: rgba(11,95,165,0.12);
+  --rule: rgba(18,33,46,0.16);
+  --ok: #16706B;
+  --font-serif: 'Inter', 'Source Sans 3', system-ui, sans-serif;
+  --font-sans: 'Inter', 'Source Sans 3', system-ui, sans-serif;
+  --panel-bg: rgba(255,255,255,0.60);
+  --panel-border: 1px solid rgba(255,255,255,0.85);
+  --panel-radius: 16px;
+  --panel-shadow: 0 8px 26px rgba(18,45,72,0.14);
+  --panel-blur: blur(16px) saturate(1.25);
+  --callout-bg: rgba(255,255,255,0.72);
+  --callout-border: 1px solid rgba(11,95,165,0.28);
+  --chip-bg: rgba(255,255,255,0.66);
+  --chip-border: 1px solid rgba(255,255,255,0.85);
+  --chip-radius: 999px;
+  --field-image:
+    radial-gradient(circle at 12% 18%, rgba(255,196,120,0.55) 0%, transparent 46%),
+    radial-gradient(circle at 86% 22%, rgba(255,150,168,0.42) 0%, transparent 44%),
+    radial-gradient(circle at 72% 88%, rgba(104,168,232,0.52) 0%, transparent 50%),
+    radial-gradient(circle at 24% 84%, rgba(140,214,206,0.42) 0%, transparent 48%);
+  --field-size: auto;
+  --accent-fill: #0B5FA5;
+  --accent-fill-ink: #FFFFFF;
+  --heading-transform: none;
+}
+:root[data-theme="glassmorphism"] body { background-attachment: fixed; }
+:root[data-theme="glassmorphism"] .rule { border-radius: 999px; }
+:root[data-theme="glassmorphism"] .col-head { border-bottom-color: rgba(18,33,46,0.16); }
+
+/* ---------- blueprint ---------- */
+
+:root[data-theme="blueprint"] {
+  --bg: #0C2233;
+  --bg-raised: #123049;
+  --bg-deep: #0E2A40;
+  --ink: #EAF4FB;
+  --ink-muted: #A9C9DD;
+  --ink-faint: #7FA6BF;
+  --accent: #5CC8F5;
+  --accent-soft: rgba(92,200,245,0.13);
+  --rule: rgba(140,205,235,0.26);
+  --ok: #6FD8A8;
+  --font-serif: 'Space Grotesk', 'Source Sans 3', system-ui, sans-serif;
+  --font-sans: 'Source Sans 3', system-ui, sans-serif;
+  --panel-bg: rgba(255,255,255,0.045);
+  --panel-border: 1px solid rgba(140,205,235,0.34);
+  --panel-radius: 2px;
+  --panel-shadow: none;
+  --callout-bg: rgba(92,200,245,0.11);
+  --callout-border: 1px solid rgba(92,200,245,0.42);
+  --chip-bg: rgba(255,255,255,0.05);
+  --chip-border: 1px solid rgba(140,205,235,0.34);
+  --chip-radius: 2px;
+  --field-image:
+    linear-gradient(rgba(140,205,235,0.13) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(140,205,235,0.13) 1px, transparent 1px),
+    linear-gradient(rgba(140,205,235,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(140,205,235,0.06) 1px, transparent 1px);
+  --field-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+  --accent-fill: #5CC8F5;
+  --accent-fill-ink: #0C2233;
+  --heading-transform: none;
+}
+:root[data-theme="blueprint"] .fig img,
+:root[data-theme="blueprint"] figure img { filter: saturate(0.28) contrast(1.06) brightness(0.94); }
+:root[data-theme="blueprint"] .callout.practice { background: rgba(111,216,168,0.12); border-color: rgba(111,216,168,0.42); }
+:root[data-theme="blueprint"] .histbyte { background: rgba(255,255,255,0.03); }
+:root[data-theme="blueprint"] .pace-table th,
+:root[data-theme="blueprint"] .pace-table td { border-bottom: 1px solid rgba(140,205,235,0.22); }
+
+/* ---------- risograph ---------- */
+
+:root[data-theme="risograph"] {
+  --bg: #F4EFE2;
+  --bg-raised: #FBF8F0;
+  --bg-deep: #EDE6D4;
+  --ink: #1A1A1A;
+  --ink-muted: #45454A;
+  --ink-faint: #6A6A72;
+  --accent: #C01F37;
+  --accent-soft: rgba(232,56,79,0.12);
+  --rule: rgba(26,26,26,0.22);
+  --ok: #157A56;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'Space Grotesk', 'Source Sans 3', system-ui, sans-serif;
+  --panel-bg: #FBF8F0;
+  --panel-border: 2px solid #1A1A1A;
+  --panel-radius: 0px;
+  --panel-shadow: 4px 4px 0 rgba(45,87,212,0.30);
+  --callout-bg: rgba(232,56,79,0.11);
+  --callout-border: 2px solid #E8384F;
+  --chip-bg: #FBF8F0;
+  --chip-border: 2px solid #1A1A1A;
+  --chip-radius: 0px;
+  --field-image: radial-gradient(rgba(45,87,212,0.14) 1px, transparent 1.4px);
+  --field-size: 9px 9px;
+  --accent-fill: #E8384F;
+  --accent-fill-ink: #FBF8F0;
+  --heading-transform: none;
+}
+:root[data-theme="risograph"] h1,
+:root[data-theme="risograph"] h2 { text-shadow: 2px 2px 0 rgba(45,87,212,0.22); }
+:root[data-theme="risograph"] .col-head { color: var(--accent); border-bottom: 2px solid rgba(26,26,26,0.22); }
+:root[data-theme="risograph"] .pace-table th { color: var(--accent); }
+:root[data-theme="risograph"] .pace-table th,
+:root[data-theme="risograph"] .pace-table td { border-bottom: 1px solid rgba(26,26,26,0.22); }
+:root[data-theme="risograph"] .fig img,
+:root[data-theme="risograph"] figure img { filter: contrast(1.08) saturate(0.85); }

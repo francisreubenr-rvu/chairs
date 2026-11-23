@@ -18,6 +18,60 @@
     });
   }
 
+  /* ---- reading theme ---- */
+  var THEME_META = {
+    paper: '#F1EBDD',
+    neobrutalism: '#FAF7F0',
+    maxbrutalism: '#CFCAC0',
+    claymorphism: '#EFE4DA',
+    glassmorphism: '#E8EEF5',
+    blueprint: '#0C2233',
+    risograph: '#F4EFE2'
+  };
+  var themePicker = document.querySelector('.theme-picker');
+  var themeButtons = Array.prototype.slice.call(document.querySelectorAll('[data-theme-choice]'));
+  var themeMeta = document.querySelector('meta[name="theme-color"]');
+
+  function currentTheme() {
+    return document.documentElement.getAttribute('data-theme') || 'paper';
+  }
+
+  function applyTheme(id, persist) {
+    if (id === 'paper') document.documentElement.removeAttribute('data-theme');
+    else document.documentElement.setAttribute('data-theme', id);
+    if (persist) {
+      try { localStorage.setItem('chairs-theme', id); } catch (e) {}
+    }
+    themeButtons.forEach(function (b) {
+      b.setAttribute('aria-pressed', b.getAttribute('data-theme-choice') === id ? 'true' : 'false');
+    });
+    if (themeMeta && THEME_META[id]) themeMeta.setAttribute('content', THEME_META[id]);
+  }
+
+  if (themeButtons.length) {
+    applyTheme(currentTheme(), false);
+    themeButtons.forEach(function (b) {
+      b.addEventListener('click', function () {
+        applyTheme(b.getAttribute('data-theme-choice'), true);
+        if (themePicker) {
+          themePicker.open = false;
+          var summary = themePicker.querySelector('summary');
+          if (summary) summary.focus();
+        }
+      });
+    });
+    document.addEventListener('click', function (e) {
+      if (themePicker && themePicker.open && !themePicker.contains(e.target)) themePicker.open = false;
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && themePicker && themePicker.open) {
+        themePicker.open = false;
+        var summary = themePicker.querySelector('summary');
+        if (summary) summary.focus();
+      }
+    });
+  }
+
   /* ---- search ---- */
   var dialog = document.getElementById('search');
   var input = document.getElementById('search-input');

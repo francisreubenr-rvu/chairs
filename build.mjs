@@ -202,6 +202,16 @@ const modules = site.modules;
 const moduleCount = (n) => slides.filter((s) => s.module === String(n)).length;
 const firstSlideOf = (n) => slides.find((s) => s.module === String(n) && !s.divider);
 const builtOn = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date());
+const THEMES = [
+  { id: 'paper', label: 'Paper', bg: '#F1EBDD', ink: '#8E2230', meta: '#F1EBDD' },
+  { id: 'neobrutalism', label: 'Neobrutalism', bg: '#FAF7F0', ink: '#D62828', meta: '#FAF7F0' },
+  { id: 'maxbrutalism', label: 'Max brutalism', bg: '#CFCAC0', ink: '#D93A00', meta: '#CFCAC0' },
+  { id: 'claymorphism', label: 'Claymorphism', bg: '#EFE4DA', ink: '#C0492B', meta: '#EFE4DA' },
+  { id: 'glassmorphism', label: 'Glassmorphism', bg: '#E8EEF5', ink: '#0B5FA5', meta: '#E8EEF5' },
+  { id: 'blueprint', label: 'Blueprint', bg: '#0C2233', ink: '#5CC8F5', meta: '#0C2233' },
+  { id: 'risograph', label: 'Risograph', bg: '#F4EFE2', ink: '#E8384F', meta: '#F4EFE2' },
+];
+
 const slugify = (s) => s.toLowerCase().replace(/&/g, ' and ').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
 function pageHead({ title, description, path, ogType = 'website' }) {
@@ -217,6 +227,7 @@ function pageHead({ title, description, path, ogType = 'website' }) {
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="icon" href="/assets/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<script>try { var t = localStorage.getItem('chairs-theme'); if (t && t !== 'paper') document.documentElement.dataset.theme = t; } catch (e) {}</script>
 <link rel="stylesheet" href="/assets/site.css">
 <meta property="og:title" content="${escapeHtml(title)}">
 <meta property="og:description" content="${escapeHtml(description)}">
@@ -241,6 +252,13 @@ function chrome(active) {
       ${link('/#contents', 'Modules', 'modules')}
       ${link('/library/', 'Library', 'library')}
       ${link('/deck/', 'Deck', 'deck')}
+      <details class="theme-picker">
+        <summary class="theme-toggle">Theme</summary>
+        <div class="theme-pop" role="group" aria-label="Reading theme">
+          <p class="theme-pop-h">Reading theme</p>
+          ${THEMES.map((t) => `<button class="theme-opt" type="button" data-theme-choice="${t.id}" aria-pressed="false"><span class="swatch" aria-hidden="true"><i style="--sw:${t.bg}"></i><i style="--sw:${t.ink}"></i></span>${t.label}</button>`).join('')}
+        </div>
+      </details>
       <button class="search-open" type="button" aria-haspopup="dialog">Search <kbd>/</kbd></button>
     </nav>
   </div>
@@ -601,7 +619,7 @@ for (const mod of modules) {
   writeFileSync(join(dir, 'index.html'), p.html);
 }
 
-writeFileSync(join(DIST, 'assets/site.css'), read('src/tokens.css') + '\n' + read('src/site.css'));
+writeFileSync(join(DIST, 'assets/site.css'), read('src/tokens.css') + '\n' + read('src/site.css') + '\n' + read('src/site-themes.css'));
 copyFileSync(join(ROOT, 'src/site.js'), join(DIST, 'assets/site.js'));
 for (const f of ['favicon.png', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png']) {
   copyFileSync(join(ROOT, 'public', f), join(DIST, 'assets', f));

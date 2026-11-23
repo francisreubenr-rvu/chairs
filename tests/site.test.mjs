@@ -98,6 +98,17 @@ test('library renders every portfolio with sources', () => {
   assert.match(html, /Portfolio Library/);
 });
 
+test('every page offers the seven reading themes', () => {
+  const html = read('index.html');
+  const options = html.match(/data-theme-choice="[^"]+"/g) || [];
+  assert.equal(options.length, 7);
+  assert.match(html, /localStorage\.getItem\('chairs-theme'\)/);
+  const css = read('assets/site.css');
+  for (const id of ['neobrutalism', 'maxbrutalism', 'claymorphism', 'glassmorphism', 'blueprint', 'risograph']) {
+    assert.match(css, new RegExp(`\\[data-theme="${id}"\\]`));
+  }
+});
+
 test('search index covers taught slides and portfolios', () => {
   const index = JSON.parse(read('search.json'));
   assert.ok(index.entries.length > 100);

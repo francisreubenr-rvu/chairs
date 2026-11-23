@@ -20,6 +20,16 @@ The Advanced Diplomat Cohort programme for Diplomathon Global. Six taught module
 | `/library/` | Eleven portfolios, sources and laws to cite, filterable by committee |
 | `/deck/` | The presentation deck, self-contained and offline capable |
 
+## Reading themes
+
+Seven themes are available on every page from the header: Paper, Neobrutalism, Max brutalism, Claymorphism, Glassmorphism, Blueprint and Risograph. The choice is stored in `localStorage` as `chairs-theme` and applied before first paint, so there is no flash of the wrong theme. The presentation deck keeps its own theme toggle.
+
+Theme accents that would fall below 4.5:1 at small sizes were darkened for the reading surface: Max brutalism, Claymorphism and Risograph use a text-safe accent while keeping the brighter brand colour for fills.
+
+## Typography
+
+Reading copy is set at 1.18rem (about 19px) with a 72-character measure and 1.68 line height. Section headings run from 1.78rem to 2.55rem, and module titles to 3.9rem. The scale is deliberately larger than a marketing site because this is a learning surface read at length.
+
 ## The programme
 
 | Section | Slides | Source |
@@ -96,7 +106,7 @@ Slide state, theme and sound choice are remembered per browser. Slides are linka
 
 ## Accessibility
 
-One `h1` per page, landmarks, a skip link, visible focus, labelled dialogs and 44px primary touch targets. The seven deck themes were checked against WCAG AA in the previous deck revision; the reading surfaces use the same token contrast. Motion respects `prefers-reduced-motion`.
+One `h1` per page, landmarks, a skip link, visible focus, labelled dialogs and 44px primary touch targets. Theme text colours are checked at 4.5:1 or better at body size, including the darkened accents. Motion respects `prefers-reduced-motion`.
 
 ## Images
 
