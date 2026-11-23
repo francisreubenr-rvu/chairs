@@ -142,6 +142,19 @@ const IMG_DIR = join(DIST, 'assets/img');
 mkdirSync(IMG_DIR, { recursive: true });
 const imageFiles = new Map();
 
+function jpegSize(buf) {
+  let i = 2;
+  while (i < buf.length - 8) {
+    if (buf[i] !== 0xff) { i++; continue; }
+    const marker = buf[i + 1];
+    if (marker >= 0xc0 && marker <= 0xcf && ![0xc4, 0xc8, 0xcc].includes(marker)) {
+      return { w: buf.readUInt16BE(i + 7), h: buf.readUInt16BE(i + 5) };
+    }
+    i += 2 + buf.readUInt16BE(i + 2);
+  }
+  return null;
+}
+
 function externaliseImages(html) {
   let n = 0;
   return html.replace(/src="data:image\/(jpeg|png);base64,([^"]+)"/g, (_m, type, b64) => {
@@ -152,7 +165,9 @@ function externaliseImages(html) {
     if (!existsSync(file)) writeFileSync(file, buf);
     imageFiles.set(name, type);
     n++;
-    return `src="/assets/img/${name}"`;
+    const size = type === 'jpeg' ? jpegSize(buf) : null;
+    const dims = size ? ` width="${size.w}" height="${size.h}"` : '';
+    return `src="/assets/img/${name}"${dims} loading="lazy"`;
   });
 }
 
@@ -187,7 +202,7 @@ function pageHead({ title, description, path, ogType = 'website' }) {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${escapeHtml(title)}</title>
 <meta name="description" content="${escapeHtml(description)}">
-<meta name="theme-color" content="#8E2230">
+<meta name="theme-color" content="#F1EBDD">
 <meta name="color-scheme" content="light">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="icon" href="/assets/favicon.png" type="image/png">
@@ -226,7 +241,7 @@ function searchDialog() {
   return `<dialog id="search" aria-label="Search the programme">
   <div class="search-inner">
     <label class="search-label" for="search-input">Search the programme</label>
-    <input id="search-input" type="search" autocomplete="off" placeholder="Company, motion, clause, event" aria-controls="search-results">
+    <input id="search-input" name="q" type="search" autocomplete="off" spellcheck="false" placeholder="Company, motion, clause, event" aria-controls="search-results">
     <button class="search-close" type="button" aria-label="Close search">Close</button>
     <p class="search-hint">Type to filter. Enter opens the top result. Escape closes.</p>
     <ul id="search-results" aria-live="polite"></ul>
@@ -284,7 +299,7 @@ function homePage() {
     <h1>Chairs</h1>
     <p class="tagline">${escapeHtml(site.tagline)}</p>
     <div class="meta-row">
-      <span>Six modules</span><span>Seven portfolios</span><span>114-slide deck</span><span>Taught live, read alone</span>
+      <span>6 modules</span><span>7 portfolios</span><span>114-slide deck</span><span>Taught live, read alone</span>
     </div>
     <div class="actions">
       <a class="btn" href="/modules/rules-of-procedure/">Start with Module One</a>

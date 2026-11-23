@@ -96,7 +96,7 @@ Slide state, theme and sound choice are remembered per browser. Slides are linka
 
 ## Accessibility
 
-One `h1` per page, landmarks, a skip link, visible focus, labelled dialogs and 44px touch targets. The seven deck themes were checked against WCAG AA in the previous deck revision; the reading surfaces use the same token contrast. Motion respects `prefers-reduced-motion`.
+One `h1` per page, landmarks, a skip link, visible focus, labelled dialogs and 44px primary touch targets. The seven deck themes were checked against WCAG AA in the previous deck revision; the reading surfaces use the same token contrast. Motion respects `prefers-reduced-motion`.
 
 ## Images
 

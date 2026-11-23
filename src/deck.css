@@ -3046,3 +3046,9 @@ html.theming #overview-toggle {
 #programme-link:hover,
 #programme-link:focus-visible { color: var(--accent); border-color: var(--rule); }
 @media print { #programme-link { display: none; } }
+
+/* Focus replacement for the search field, which sets outline: none */
+#search-input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}

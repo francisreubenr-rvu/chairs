@@ -22,6 +22,7 @@ body {
 
 img { max-width: 100%; }
 a { color: inherit; }
+a, button { touch-action: manipulation; }
 button { font: inherit; color: inherit; }
 
 ::selection { background: var(--accent-soft); }
@@ -155,6 +156,7 @@ button { font: inherit; color: inherit; }
   color: var(--accent);
 }
 .cover h1 {
+  text-wrap: balance;
   font-family: var(--font-serif);
   font-size: clamp(3.6rem, 11vw, 8.5rem);
   font-weight: 600; line-height: 0.92;
@@ -293,6 +295,7 @@ button { font: inherit; color: inherit; }
 .breadcrumb a { text-decoration: none; }
 .breadcrumb a:hover { color: var(--accent); }
 .module-head h1 {
+  text-wrap: balance;
   font-family: var(--font-serif);
   font-size: clamp(2.1rem, 5.4vw, 3.9rem);
   font-weight: 600; line-height: 1.02;
@@ -389,6 +392,7 @@ button { font: inherit; color: inherit; }
 .lesson .src.expand { color: var(--ok); }
 
 .lesson > h2 {
+  text-wrap: balance;
   font-family: var(--font-serif);
   font-size: clamp(1.55rem, 3.1vw, 2.15rem);
   font-weight: 600; line-height: 1.12;
@@ -871,6 +875,7 @@ ol.compact.from-6 { counter-reset: item 5; }
 
 #search {
   width: min(94vw, 640px);
+  overscroll-behavior: contain;
   margin: 12vh auto auto;
   border: 1px solid var(--ink);
   background: var(--bg);
@@ -967,7 +972,8 @@ ol.compact.from-6 { counter-reset: item 5; }
   .site-nav a { padding: 0.7rem 0; border-bottom: 1px solid var(--rule); }
   .search-open { margin-left: auto; }
   .nav-toggle { display: inline-block; }
-  .cover h1 { font-size: clamp(3rem, 16vw, 5rem); }
+  .cover h1 {
+  text-wrap: balance; font-size: clamp(3rem, 16vw, 5rem); }
   .contents-row { grid-template-columns: 2.6rem 1fr; }
   .contents-row.library { margin-inline: 0; padding-inline: 0.6rem; }
   .cr-c { grid-column: 2; text-align: left; margin-top: 0.15rem; }
@@ -977,15 +983,21 @@ ol.compact.from-6 { counter-reset: item 5; }
   .pace-table.dense td, .pace-table td { font-size: 0.82rem; padding: 0.4rem; }
   .pace-table td:first-child { white-space: normal; }
   .site-foot .wrap { grid-template-columns: 1fr; gap: 1.4rem; }
-  .module-head h1 { max-width: none; }
+  .module-head h1 {
+  text-wrap: balance; max-width: none; }
   .reader-foot { grid-template-columns: 1fr; }
   .reader-foot .next { text-align: left; }
   .filterbar { position: static; }
   .search-open kbd { display: none; }
+  .nav-toggle, .search-open { min-height: 44px; }
+  .site-nav a { min-height: 44px; display: flex; align-items: center; }
+  .chip { min-height: 44px; padding-block: 0.6rem; }
+  .btn { min-height: 48px; }
 }
 
 @media (max-width: 420px) {
-  .lesson > h2 { font-size: 1.42rem; }
+  .lesson > h2 {
+  text-wrap: balance; font-size: 1.42rem; }
   .factcloud .fact { flex-basis: 100%; }
   .stage-row { grid-template-columns: 2.6em 1fr; }
   .timeline li { grid-template-columns: 4.6em 1fr; }
