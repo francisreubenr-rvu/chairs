@@ -1,5 +1,5 @@
 {
-  "programme": "Diplomathon Global · Advanced Diplomat Cohort",
+  "programme": "Diplomathon Global \u00b7 Advanced Diplomat Cohort",
   "title": "Chairs",
   "tagline": "A training programme in how a committee actually works, argued from primary sources.",
   "description": "The Advanced Diplomat Cohort programme: Rules of Procedure, Effective Communication, Design Thinking, Entrepreneurship and Innovation, Major Events, and Company Portfolio research.",
@@ -12,8 +12,8 @@
       "outcome": "Run a committee session under the written rules: motions, points, yields, documents and voting.",
       "note": "This module is procedure, not strategy. Every rule line is tagged to the Diplomathon page it comes from; the four closing slides complete the guide's sections on precedence, working papers, resolutions and clause language.",
       "sources": [
-        "Rules of Procedure.pdf p.1–13",
-        "Conference Preparation Guide p.6–9"
+        "Rules of Procedure.pdf p.1\u201313",
+        "Conference Preparation Guide p.6\u20139"
       ]
     },
     {
@@ -24,7 +24,7 @@
       "outcome": "Deliver a 90-second speech a room can follow, and listen well enough to answer it.",
       "note": "Communication is treated as a two-way act: what you send, what the room receives, and the assumptions that turn an observation into a belief.",
       "sources": [
-        "Communication.pdf p.1–5"
+        "Communication.pdf p.1\u20135"
       ]
     },
     {
@@ -35,7 +35,7 @@
       "outcome": "Turn an agenda into one defined problem and a solution tested against real users.",
       "note": "The five phases are iterative, not a checklist. The group challenges at the end force a return to an earlier phase, which is the point of the method.",
       "sources": [
-        "Design Thinking.pdf p.1–5"
+        "Design Thinking.pdf p.1\u20135"
       ]
     },
     {
@@ -46,7 +46,7 @@
       "outcome": "Test whether a solution can be funded, run and grown, then argue the case for it.",
       "note": "Entrepreneurship here covers value created inside an existing domain as well as a new enterprise. Creativity, feasibility and impact are assessed together.",
       "sources": [
-        "Entrepreneurship & Innovation.pdf p.1–6"
+        "Entrepreneurship & Innovation.pdf p.1\u20136"
       ]
     },
     {
@@ -57,7 +57,7 @@
       "outcome": "Argue from precedent, with dates and consequences that survive a challenge.",
       "note": "Ten events, one seven-part frame. The module rewards the delegate who can compare two events without flattening either of them.",
       "sources": [
-        "Major Events that Changes the World.pdf p.1–3"
+        "Major Events that Changes the World.pdf p.1\u20133"
       ]
     },
     {
@@ -68,18 +68,18 @@
       "outcome": "Research a company portfolio to primary-source standard, then defend it in the room.",
       "note": "The method is the same spine as a country portfolio; the evidence base changes. Worked portfolios and a source hierarchy make the method concrete.",
       "sources": [
-        "company-portfolio-prep-track.md §1–§7",
-        "Portfolio Prep Guide p.1–2",
-        "Research Sources for Company Portfolios p.1–4"
+        "company-portfolio-prep-track.md \u00a71\u2013\u00a77",
+        "Portfolio Prep Guide p.1\u20132",
+        "Research Sources for Company Portfolios p.1\u20134"
       ]
     }
   ],
   "library": {
     "title": "Portfolio Library",
-    "note": "Seven portfolios across four committees. Each entry carries the sources to cite and the laws that constrain it. This is reference material, not a taught module.",
+    "note": "Seven portfolios across five committees. Each entry carries the sources to cite and the laws that constrain it. This is reference material, not a taught module.",
     "sources": [
-      "Research Sources for Company Portfolios p.1–4",
-      "Diplomathon Portfolio Prep Guide p.1–2"
+      "Research Sources for Company Portfolios p.1\u20134",
+      "Diplomathon Portfolio Prep Guide p.1\u20132"
     ]
   }
 }

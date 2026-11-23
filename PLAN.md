@@ -51,3 +51,22 @@ Started 2026-11-21. Two workstreams: integrate three newly supplied PDFs, and sh
 
 ## Done log
 - 2026-11-21: Vercel CLI authenticated as `francisreubenr-rvu`; project `chairs` found, production URL `https://chairs-xi.vercel.app`; git integration confirmed via API (`link.type: github`, repo `chairs`, production branch `master`). Deck at 118 slides across six modules plus close: Module 1 33, Module 6 23. Playwright pass at 1440x900 and 390x844: no overflow, no horizontal scroll, overview built 118 thumbnails, search returned hits, zero console errors. Not merged: remote branch `mobile-tap-nav` (separate feature, remains unmerged).
+
+## 2026-11-23 · Site rebuild
+
+Spec: `docs/superpowers/specs/2026-11-23-chairs-site-rebuild-design.md`
+Plan: `docs/superpowers/plans/2026-11-23-chairs-site-rebuild.md`
+
+| # | Deliverable | Status |
+|---|---|---|
+| 1 | Scaffold: package.json, gitignore, module source parts, site config | done |
+| 2 | Extract tokens, deck CSS, deck JS, deck shell | done |
+| 3 | Build: parse, validate, externalise images, self-contained deck | done |
+| 4 | Content restructure: Module 1 procedure only, research consolidated into Module 6 | done |
+| 5 | Portfolio library data, library page, four appendix slides | done |
+| 6 | Home, six module readers, search index, 404 | done |
+| 7 | Deck at `/deck/`, service worker scope, Vercel build config | done |
+| 8 | Tests: counts, one h1 per page, links and anchors | done |
+| 9 | Desktop and mobile verification, print, live deploy | pending |
+
+Result: 114-slide deck, six readers, seven library entries. Module 1 dropped to 29 slides; Module 6 is 19.

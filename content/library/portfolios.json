@@ -1,0 +1,192 @@
+{
+  "committees": [
+    "Education, HR & Future of Work",
+    "United Panel for Future Ready Education (UPFRE)",
+    "Global Space Policy and Trade Council",
+    "Sports, Health & Bioscience",
+    "Future Tourism Forum"
+  ],
+  "portfolios": [
+    {
+      "id": "sap-successfactors",
+      "company": "SAP SuccessFactors",
+      "committee": "Education, HR & Future of Work",
+      "delegate": "Roohi Deshpande",
+      "sheet": "education",
+      "purpose": "SAP's AI-driven cloud HR suite, part of SAP since 2012.",
+      "angles": ["Micro-credentials", "AI tutors", "AI hiring", "The four-day week"],
+      "primary": [
+        "SAP product page for SuccessFactors",
+        "SAP Integrated Report 2025",
+        "SAP Investor Relations: 20-F and reports",
+        "SAP News Center, including the SuccessFactors 1H 2026 release",
+        "SAP Global AI Ethics Policy"
+      ],
+      "bodies": [
+        "ILO, future of work and working time",
+        "OECD Employment Outlook and Skills Outlook",
+        "WEF Future of Jobs Report 2025",
+        "UNESCO, Guidance for Generative AI in Education and Research (2023)"
+      ],
+      "laws": [
+        "EU AI Act, Regulation 2024/1689, Annex III: AI in hiring and education is high-risk",
+        "EU Council Recommendation on micro-credentials (2022)",
+        "NYC Local Law 144, bias audits for automated hiring",
+        "India: NEP 2020, Academic Bank of Credits, Skill India Digital Hub"
+      ],
+      "notes": ["4 Day Week Global runs the four-day-week pilot data."]
+    },
+    {
+      "id": "space-adventures",
+      "company": "Space Adventures",
+      "committee": "Global Space Policy and Trade Council",
+      "sheet": "mobility",
+      "purpose": "Founded 1998. It does not build rockets; it arranges flights. It arranged all nine private-citizen flights to the ISS, all on Russia's Soyuz.",
+      "angles": ["Rules for civilian space travel"],
+      "primary": [
+        "spaceadventures.com",
+        "Space Adventures press releases"
+      ],
+      "bodies": [
+        "UNOOSA: Outer Space Treaty (1967), Rescue Agreement (1968), Liability Convention (1972), Registration Convention (1975), and COPUOS documents",
+        "FAA Office of Commercial Space Transportation",
+        "NASA private astronaut missions and the Artemis Accords",
+        "Roscosmos, the Soyuz partner",
+        "ESA",
+        "ICAO, for airspace overlap",
+        "India: IN-SPACe and Indian Space Policy 2023"
+      ],
+      "laws": [
+        "51 U.S.C. Chapter 509, Commercial Space Launch Act",
+        "The FAA cannot regulate passenger safety on board until the moratorium ends 1 January 2028"
+      ],
+      "notes": ["For contrast: Axiom Space, Virgin Galactic investor reports, Blue Origin."]
+    },
+    {
+      "id": "bioserenity",
+      "company": "BioSerenity",
+      "committee": "Sports, Health & Bioscience",
+      "sheet": "health",
+      "purpose": "Paris-based medtech firm founded 2014. It makes AI-assisted EEG, sleep (PSG) and cardiology diagnostics with connected wearables (IceCap and Neuronaute+), CE and FDA cleared.",
+      "angles": ["Biometric AI", "CRISPR", "Sports analytics"],
+      "bestAngle": "Who owns and controls biometric and brain data, and how AI is used on it.",
+      "primary": [
+        "bioserenity.ai",
+        "FDA 510(k) clearance K231366 for Neuronaute Plus, accessdata.fda.gov"
+      ],
+      "bodies": [
+        "WHO, Ethics and Governance of AI for Health (2021) and the Human Genome Editing governance framework (2021)",
+        "FDA Digital Health Center of Excellence",
+        "WADA Prohibited List, which bans gene doping",
+        "IOC Olympic AI Agenda",
+        "Council of Europe Oviedo Convention on biomedicine",
+        "Nuffield Council on Bioethics"
+      ],
+      "laws": [
+        "EU GDPR: health data is a special category",
+        "EU AI Act",
+        "EU Medical Device Regulation 2017/745"
+      ],
+      "notes": []
+    },
+    {
+      "id": "cisco-systems",
+      "company": "Cisco Systems",
+      "committee": "United Panel for Future Ready Education (UPFRE)",
+      "sheet": "education",
+      "purpose": "Networking and infrastructure company. Its education portfolio sits in UPFRE.",
+      "angles": ["Connectivity", "Skills at school scale"],
+      "primary": [
+        "Cisco Purpose Reporting Hub",
+        "FY25 Purpose Report: train 25 million more learners by fiscal 2030 through Networking Academy, with 11.9 million trained from FY2023 to FY2025 and an India spotlight",
+        "Cisco Networking Academy, netacad.com/about",
+        "Investor relations, investor.cisco.com",
+        "Newsroom, newsroom.cisco.com"
+      ],
+      "bodies": [
+        "UNESCO Global Education Monitoring Report, Technology in Education (2023)",
+        "ITU Facts and Figures on the digital divide",
+        "Giga, the UNICEF and ITU school-connectivity initiative",
+        "World Bank EdTech"
+      ],
+      "laws": [
+        "India: NEP 2020 and the Digital India programme"
+      ],
+      "notes": []
+    },
+    {
+      "id": "us-hhs",
+      "company": "USA · Secretary of Health and Human Services",
+      "committee": "Sports, Health & Bioscience",
+      "delegate": "Robert F. Kennedy Jr.",
+      "sheet": "health",
+      "purpose": "A government official, so official US documents count as primary sources.",
+      "angles": ["Health data privacy", "Gene therapy", "Anti-doping"],
+      "primary": [
+        "HHS Press Room: the MAHA agenda, a HIPAA Privacy Rule update (16 November 2026), nutrition and prevention programmes",
+        "HIPAA, hhs.gov/hipaa",
+        "FDA: gene therapy approvals, including Casgevy, the first CRISPR therapy (December 2023)",
+        "NIH and CDC",
+        "congress.gov, for bills and hearings"
+      ],
+      "bodies": [
+        "National Academies, Human Genome Editing (2017)",
+        "US Anti-Doping Agency"
+      ],
+      "laws": [
+        "FTC Health Breach Notification Rule, for fitness and health apps"
+      ],
+      "notes": ["Quote what he has said as Secretary, not past campaign remarks."]
+    },
+    {
+      "id": "tripadvisor",
+      "company": "Tripadvisor",
+      "committee": "Future Tourism Forum",
+      "sheet": "mobility",
+      "purpose": "Travel platform. Group brands: Tripadvisor, Viator, TheFork.",
+      "angles": ["Fake reviews", "Trust and safety", "Tourism economics"],
+      "primary": [
+        "Investor Relations: annual reports, 10-K, Q3 2026 results, ir.tripadvisor.com",
+        "Transparency Report 2025 on fake reviews and moderation",
+        "Trust & Safety hub, tripadvisor.com/Trust",
+        "Media room, including the Coalition for Trusted Reviews it co-founded"
+      ],
+      "bodies": [
+        "UN Tourism, including the Global Code of Ethics for Tourism",
+        "World Travel & Tourism Council economic impact data",
+        "OECD Tourism Trends and Policies",
+        "Global Sustainable Tourism Council"
+      ],
+      "laws": [
+        "US FTC rule banning fake reviews (2024)",
+        "EU Digital Services Act",
+        "India: Ministry of Tourism, Department of Consumer Affairs, BIS standard IS 19000:2022 on online consumer reviews"
+      ],
+      "notes": []
+    },
+    {
+      "id": "asics",
+      "company": "ASICS",
+      "committee": "Sports, Health & Bioscience",
+      "sheet": "health",
+      "purpose": "Sports science portfolio. ASICS owns Runkeeper, which gives it an athlete-data angle.",
+      "angles": ["Sports science", "Athlete data", "Shoe technology"],
+      "primary": [
+        "Investor Relations, corp.asics.com/en/investor_relations",
+        "Integrated Report 2025, published 17 July 2026",
+        "ASICS Institute of Sport Science, now with ISS America and ISS Europe",
+        "Sustainability, corp.asics.com/en/csr"
+      ],
+      "bodies": [
+        "World Athletics shoe technology rules",
+        "WADA",
+        "IOC Olympic AI Agenda",
+        "World Federation of the Sporting Goods Industry"
+      ],
+      "laws": [
+        "EU GDPR, for athlete biometric data"
+      ],
+      "notes": []
+    }
+  ]
+}

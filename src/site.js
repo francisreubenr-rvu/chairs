@@ -1,0 +1,146 @@
+/* Chairs · site interactions. No dependencies. */
+(function () {
+  'use strict';
+
+  /* ---- mobile navigation ---- */
+  var nav = document.getElementById('site-nav');
+  var navToggle = document.querySelector('.nav-toggle');
+  if (nav && navToggle) {
+    navToggle.addEventListener('click', function () {
+      var open = nav.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    nav.addEventListener('click', function (e) {
+      if (e.target.tagName === 'A') {
+        nav.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  /* ---- search ---- */
+  var dialog = document.getElementById('search');
+  var input = document.getElementById('search-input');
+  var results = document.getElementById('search-results');
+  var index = null;
+  var loading = false;
+
+  function openSearch() {
+    if (!dialog) return;
+    if (typeof dialog.showModal === 'function') dialog.showModal();
+    else dialog.setAttribute('open', '');
+    setTimeout(function () { if (input) input.focus(); }, 20);
+    loadIndex();
+  }
+
+  function closeSearch() {
+    if (!dialog) return;
+    if (typeof dialog.close === 'function') dialog.close();
+    else dialog.removeAttribute('open');
+  }
+
+  function loadIndex() {
+    if (index || loading) return;
+    loading = true;
+    fetch('/search.json')
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        index = data.entries || [];
+        render(input.value);
+      })
+      .catch(function () {
+        results.innerHTML = '<li><a href="/">Search is unavailable. Return to the contents.</a></li>';
+      })
+      .finally(function () { loading = false; });
+  }
+
+  function render(query) {
+    if (!results) return;
+    var q = String(query || '').trim().toLowerCase();
+    if (!index) return;
+    if (!q) {
+      results.innerHTML = '<li><a href="/#contents"><span class="sr-mod">Start</span><span class="sr-t">Browse the six modules</span><span class="sr-x">Or type a company, motion, clause or event.</span></a></li>';
+      return;
+    }
+    var terms = q.split(/\s+/);
+    var hits = index.filter(function (e) {
+      var hay = (e.t + ' ' + e.m + ' ' + e.x).toLowerCase();
+      return terms.every(function (t) { return hay.indexOf(t) !== -1; });
+    }).slice(0, 20);
+    if (!hits.length) {
+      results.innerHTML = '<li><a href="/library/"><span class="sr-mod">No match</span><span class="sr-t">Nothing found for "' + escapeText(q) + '"</span><span class="sr-x">Try a shorter phrase, or browse the library.</span></a></li>';
+      return;
+    }
+    results.innerHTML = hits.map(function (e) {
+      return '<li><a href="' + e.u + '"><span class="sr-mod">' + escapeText(e.m) + '</span><span class="sr-t">' + escapeText(e.t) + '</span><span class="sr-x">' + escapeText(e.x.slice(0, 120)) + '</span></a></li>';
+    }).join('');
+  }
+
+  function escapeText(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('.search-open'), function (b) {
+    b.addEventListener('click', openSearch);
+  });
+  var closeBtn = document.querySelector('.search-close');
+  if (closeBtn) closeBtn.addEventListener('click', closeSearch);
+  if (dialog) {
+    dialog.addEventListener('click', function (e) {
+      if (e.target === dialog) closeSearch();
+    });
+    dialog.addEventListener('close', function () { if (input) input.value = ''; });
+  }
+  if (input) {
+    input.addEventListener('input', function () { render(input.value); });
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') {
+        var first = results && results.querySelector('a');
+        if (first) { e.preventDefault(); window.location.href = first.href; }
+      }
+    });
+  }
+  document.addEventListener('keydown', function (e) {
+    var tag = (e.target.tagName || '').toLowerCase();
+    var typing = tag === 'input' || tag === 'textarea' || e.target.isContentEditable;
+    if ((e.key === '/' && !typing) || ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k')) {
+      e.preventDefault();
+      openSearch();
+    }
+    if (e.key === 'Escape' && dialog && dialog.hasAttribute('open')) closeSearch();
+  });
+
+  /* ---- library filter ---- */
+  var chips = Array.prototype.slice.call(document.querySelectorAll('.chip[data-filter]'));
+  if (chips.length) {
+    var cards = Array.prototype.slice.call(document.querySelectorAll('.folio'));
+    var groups = Array.prototype.slice.call(document.querySelectorAll('.committee-group'));
+    var count = document.getElementById('filter-count');
+
+    function applyFilter(value) {
+      var shown = 0;
+      cards.forEach(function (card) {
+        var match = value === 'all' || card.getAttribute('data-committee') === value;
+        card.hidden = !match;
+        if (match) shown++;
+      });
+      groups.forEach(function (g) {
+        var any = g.querySelector('.folio:not([hidden])');
+        g.hidden = !any;
+      });
+      if (count) count.textContent = shown + (shown === 1 ? ' portfolio' : ' portfolios');
+      chips.forEach(function (c) {
+        c.setAttribute('aria-pressed', c.getAttribute('data-filter') === value ? 'true' : 'false');
+      });
+      if (value !== 'all' && window.history.replaceState) {
+        window.history.replaceState(null, '', '/library/?committee=' + encodeURIComponent(value));
+      }
+    }
+
+    chips.forEach(function (c) {
+      c.addEventListener('click', function () { applyFilter(c.getAttribute('data-filter')); });
+    });
+    var preset = new URLSearchParams(window.location.search).get('committee');
+    if (preset) applyFilter(preset);
+  }
+})();

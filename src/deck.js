@@ -27,7 +27,8 @@
     '4': 'Module 4 · Entrepreneurship',
     '5': 'Module 5 · Major Events',
     '6': 'Module 6 · Company Portfolio',
-    '7': 'Close'
+    '7': 'Module 7 · Portfolio Library',
+    '8': 'Close'
   };
   const moduleShort = {
     '0': 'Orientation',
@@ -36,8 +37,9 @@
     '3': 'Design Thinking',
     '4': 'Entrepreneurship & Innovation',
     '5': 'Major Events That Changed the World',
-    '6': 'Company Portfolio Prep Track',
-    '7': 'Close'
+    '6': 'Company Portfolio Track',
+    '7': 'Portfolio Library',
+    '8': 'Close'
   };
   const moduleSources = {
     '0': 'Programme framing and how to read this deck',
@@ -47,7 +49,8 @@
     '4': 'Entrepreneurship & Innovation.pdf · p.1–6',
     '5': 'Major Events that Changes the World.pdf · p.1–3',
     '6': 'company-portfolio-prep-track.md · §1–§7 + Portfolio Prep p.1–2 + Research Sources p.1–4',
-    '7': 'Synthesis and source map'
+    '7': 'Research Sources p.1–4 · Portfolio Prep Guide p.1–2',
+    '8': 'Synthesis and source map'
   };
 
   if (totalLabel) totalLabel.textContent = '/ ' + String(total).padStart(2, '0');
@@ -95,7 +98,7 @@
     btn.type = 'button';
     btn.className = 'idx-item';
     btn.innerHTML =
-      '<span class="idx-n">' + (m.mod === '0' || m.mod === '7' ? moduleShort[m.mod] : 'Module ' + m.mod) +
+      '<span class="idx-n">' + (m.mod === '0' || m.mod === '8' ? moduleShort[m.mod] : 'Module ' + m.mod) +
       ' · slides ' + (m.index + 1) + '–' + (m.index + m.count) + '</span>' +
       '<span class="idx-t"></span>' +
       '<span class="idx-s"></span>' +
@@ -168,7 +171,7 @@
       head.className = 'ov-mod-head';
       const n = document.createElement('span');
       n.className = 'ov-mod-n';
-      n.textContent = (m.mod === '0' || m.mod === '7') ? moduleShort[m.mod] : 'Module ' + m.mod;
+      n.textContent = (m.mod === '0' || m.mod === '8') ? moduleShort[m.mod] : 'Module ' + m.mod;
       const t = document.createElement('span');
       t.className = 'ov-mod-t';
       t.textContent = moduleShort[m.mod] || ('Module ' + m.mod);
