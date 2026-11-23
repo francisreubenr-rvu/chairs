@@ -67,6 +67,8 @@ Plan: `docs/superpowers/plans/2026-11-23-chairs-site-rebuild.md`
 | 6 | Home, six module readers, search index, 404 | done |
 | 7 | Deck at `/deck/`, service worker scope, Vercel build config | done |
 | 8 | Tests: counts, one h1 per page, links and anchors | done |
-| 9 | Desktop and mobile verification, print, live deploy | pending |
+| 9 | Desktop and mobile verification, print, live deploy | done |
 
 Result: 114-slide deck, six readers, seven library entries. Module 1 dropped to 29 slides; Module 6 is 19.
+
+Verification: 12/12 tests pass. Live routes return 200 for home, six modules, library, deck, 404, CSS, JS, search index and manifest. Playwright at 1440x900 and 390x844: one h1 per page, no horizontal overflow, deck reports 114 slides with 114 overview thumbnails, legacy `/#s42` forwards to `/deck/#s42`, zero console errors. Print emulation produced a 642 KB A4 PDF of Module 3.

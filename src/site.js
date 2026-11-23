@@ -62,10 +62,19 @@
       results.innerHTML = '<li><a href="/#contents"><span class="sr-mod">Start</span><span class="sr-t">Browse the six modules</span><span class="sr-x">Or type a company, motion, clause or event.</span></a></li>';
       return;
     }
-    var terms = q.split(/\s+/);
+    var terms = q.split(/\s+/).filter(Boolean).map(function (t) {
+      var safe = t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      return t.length <= 3
+        ? new RegExp('(^|[^a-z0-9])' + safe + '($|[^a-z0-9])')
+        : new RegExp('(^|[^a-z0-9])' + safe);
+    });
     var hits = index.filter(function (e) {
       var hay = (e.t + ' ' + e.m + ' ' + e.x).toLowerCase();
-      return terms.every(function (t) { return hay.indexOf(t) !== -1; });
+      return terms.every(function (re) { return re.test(hay); });
+    }).sort(function (a, b) {
+      var at = a.t.toLowerCase().indexOf(q) !== -1 ? 1 : 0;
+      var bt = b.t.toLowerCase().indexOf(q) !== -1 ? 1 : 0;
+      return bt - at;
     }).slice(0, 20);
     if (!hits.length) {
       results.innerHTML = '<li><a href="/library/"><span class="sr-mod">No match</span><span class="sr-t">Nothing found for "' + escapeText(q) + '"</span><span class="sr-x">Try a shorter phrase, or browse the library.</span></a></li>';
