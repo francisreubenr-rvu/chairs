@@ -85,3 +85,16 @@ Verification: 12/12 tests pass. Live routes return 200 for home, six modules, li
 | 5 | Verify seven themes at 1440 and 390, no overflow, no console errors | done |
 
 Themes: Paper, Neobrutalism, Max brutalism, Claymorphism, Glassmorphism, Blueprint, Risograph. Deck keeps its own toggle.
+
+## 2026-11-24 · Ribbon repair
+
+| # | Fix | Status |
+|---|---|---|
+| 1 | Two-line brand lockup; subtitle no longer wraps in wider theme fonts | done |
+| 2 | Consistent tool buttons for search and theme, current theme shown on desktop | done |
+| 3 | Header behaviour switches at 900px, not 760px | done |
+| 4 | Mobile panel anchored to a real header-height variable, plus shadow | done |
+| 5 | Theme popover anchored below the header, no overlap | done |
+| 6 | Deck top controls moved into one flex row; credit hidden before collision | done |
+| 7 | Programme replaces Modules as the home destination; home no longer falsely active | done |
+| 8 | Library filters scroll horizontally on phones instead of stacking five rows | done |

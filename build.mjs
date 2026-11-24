@@ -245,22 +245,38 @@ function chrome(active) {
   const link = (href, label, key) => `<a href="${href}"${active === key ? ' aria-current="page"' : ''}>${label}</a>`;
   return `<a class="skip" href="#main">Skip to content</a>
 <header class="site-head">
-  <div class="wrap">
-    <a class="wordmark" href="/">Chairs <span>Diplomat Training Programme</span></a>
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+  <div class="wrap ribbon">
+    <a class="wordmark" href="/" aria-label="Chairs, programme home">
+      <span class="wm-text">
+        <span class="wm-name">Chairs</span>
+        <span class="wm-sub">Advanced Diplomat Cohort</span>
+      </span>
+    </a>
     <nav class="site-nav" id="site-nav" aria-label="Programme">
-      ${link('/#contents', 'Modules', 'modules')}
+      ${link('/', 'Programme', 'home')}
       ${link('/library/', 'Library', 'library')}
       ${link('/deck/', 'Deck', 'deck')}
+    </nav>
+    <div class="ribbon-tools">
+      <button class="tool-btn search-open" type="button" aria-haspopup="dialog" aria-label="Search the programme">
+        <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5L14 14"/></svg>
+        <span class="tool-label">Search</span><kbd>/</kbd>
+      </button>
       <details class="theme-picker">
-        <summary class="theme-toggle">Theme</summary>
+        <summary class="tool-btn theme-toggle" aria-label="Reading theme: Paper">
+          <span class="theme-dot" aria-hidden="true"></span>
+          <span class="tool-label theme-label">Paper</span>
+        </summary>
         <div class="theme-pop" role="group" aria-label="Reading theme">
           <p class="theme-pop-h">Reading theme</p>
           ${THEMES.map((t) => `<button class="theme-opt" type="button" data-theme-choice="${t.id}" aria-pressed="false"><span class="swatch" aria-hidden="true"><i style="--sw:${t.bg}"></i><i style="--sw:${t.ink}"></i></span>${t.label}</button>`).join('')}
         </div>
       </details>
-      <button class="search-open" type="button" aria-haspopup="dialog">Search <kbd>/</kbd></button>
-    </nav>
+      <button class="tool-btn nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Open menu">
+        <svg width="15" height="15" viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 4h12M2 8h12M2 12h12"/></svg>
+        <span class="tool-label">Menu</span>
+      </button>
+    </div>
   </div>
 </header>`;
 }
@@ -388,7 +404,7 @@ if ('serviceWorker' in navigator) { navigator.serviceWorker.getRegistrations().t
     title: 'Chairs · Diplomat Training Programme',
     description: site.description,
     path: '/',
-    active: 'modules',
+    active: 'home',
     body,
     extraScript: legacy,
   });
@@ -459,7 +475,7 @@ function modulePage(mod) {
       title: `Chairs · ${mod.title}`,
       description: mod.outcome,
       path: `/modules/${mod.slug}/`,
-      active: 'modules',
+      active: 'home',
       body,
     }),
   };

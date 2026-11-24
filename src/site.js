@@ -6,14 +6,24 @@
   var nav = document.getElementById('site-nav');
   var navToggle = document.querySelector('.nav-toggle');
   if (nav && navToggle) {
-    navToggle.addEventListener('click', function () {
-      var open = nav.classList.toggle('open');
+    var setNav = function (open) {
+      nav.classList.toggle('open', open);
       navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+      navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    };
+    navToggle.addEventListener('click', function () {
+      setNav(!nav.classList.contains('open'));
     });
     nav.addEventListener('click', function (e) {
-      if (e.target.tagName === 'A') {
-        nav.classList.remove('open');
-        navToggle.setAttribute('aria-expanded', 'false');
+      if (e.target.tagName === 'A') setNav(false);
+    });
+    document.addEventListener('click', function (e) {
+      if (nav.classList.contains('open') && !nav.contains(e.target) && !navToggle.contains(e.target)) setNav(false);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && nav.classList.contains('open')) {
+        setNav(false);
+        navToggle.focus();
       }
     });
   }
@@ -28,9 +38,20 @@
     blueprint: '#0C2233',
     risograph: '#F4EFE2'
   };
+  var THEME_LABELS = {
+    paper: 'Paper',
+    neobrutalism: 'Neobrutalism',
+    maxbrutalism: 'Max brutalism',
+    claymorphism: 'Claymorphism',
+    glassmorphism: 'Glassmorphism',
+    blueprint: 'Blueprint',
+    risograph: 'Risograph'
+  };
   var themePicker = document.querySelector('.theme-picker');
   var themeButtons = Array.prototype.slice.call(document.querySelectorAll('[data-theme-choice]'));
   var themeMeta = document.querySelector('meta[name="theme-color"]');
+  var themeLabel = document.querySelector('.theme-label');
+  var themeToggle = document.querySelector('.theme-toggle');
 
   function currentTheme() {
     return document.documentElement.getAttribute('data-theme') || 'paper';
@@ -46,6 +67,8 @@
       b.setAttribute('aria-pressed', b.getAttribute('data-theme-choice') === id ? 'true' : 'false');
     });
     if (themeMeta && THEME_META[id]) themeMeta.setAttribute('content', THEME_META[id]);
+    if (themeLabel) themeLabel.textContent = THEME_LABELS[id] || 'Theme';
+    if (themeToggle) themeToggle.setAttribute('aria-label', 'Reading theme: ' + (THEME_LABELS[id] || id));
   }
 
   if (themeButtons.length) {

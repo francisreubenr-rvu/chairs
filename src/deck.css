@@ -3052,3 +3052,27 @@ html.theming #overview-toggle {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
+
+
+/* ================================================================
+   DECK RIBBON
+   One fixed tools row. The individual buttons used to be
+   independently positioned and collided with each other and with
+   the presenter credit at common laptop widths.
+   ================================================================ */
+#deck-tools {
+  position: fixed; z-index: 500;
+  top: clamp(12px, 2vw, 22px);
+  right: clamp(12px, 2.2vw, 32px);
+  display: flex; align-items: center; gap: 8px;
+}
+#deck-tools > button {
+  position: static; top: auto; right: auto; left: auto; bottom: auto;
+  margin: 0;
+}
+#deck-tools + #credit-mark { top: calc(clamp(12px, 2vw, 22px) + 2px); }
+
+/* The credit is decorative; hide it before it can meet the tools */
+@media (max-width: 1399px) {
+  #credit-mark { display: none; }
+}
